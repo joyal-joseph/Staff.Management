@@ -1,0 +1,9 @@
+./.vs/*
+DataLibrary/bin/*
+DataLibrary/obj/*
+Joyal.StaffManagement.Console/bin/*
+Joyal.StaffManagement.Console/obj/*
+Joyal.StaffManagement.Console/.vs/*
+Joyal.StaffManagement.Core/bin/*
+Joyal.StaffManagement.Core/obj/*
+Joyal.StaffManagement.Core/.vs/*
