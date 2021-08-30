@@ -179,7 +179,6 @@ namespace staff_management_2
                             StaffChildDetails(SingleStaff);
                             Console.WriteLine("");
                         }
-
                         if (IsNull)
                         {
                             Console.WriteLine("No staffs found!!!");
