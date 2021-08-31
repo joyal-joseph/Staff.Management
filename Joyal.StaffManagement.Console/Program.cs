@@ -65,15 +65,13 @@ namespace staff_management_2
         }
         public static void ViewStaff(int id)
         {
-            Staff staff =null;
-            foreach (var SingleStaff in StaffList)
+            IEnumerable<Staff> staffQuery = from _staff in StaffList where _staff.StaffID == id select _staff;
+            foreach(Staff i in staffQuery)
             {
-                if(SingleStaff.StaffID == id)
-                {
-                    staff = SingleStaff;
-                }
+                Console.WriteLine(string.Format("Name: {0},  ID:{1}  Gender:{2}", i.Name, i.StaffID, i.Gender));
+                Console.WriteLine("Viewstaff method starts here");
+                StaffChildDetails(i);
             }
-            StaffChildDetails(staff);
         }
         public static int ChoiceInput(int NumberOfChoices)
         {
