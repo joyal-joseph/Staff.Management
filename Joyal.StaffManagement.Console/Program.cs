@@ -3,14 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace staff_management_2
+namespace StaffManagementConsole
 {
     class Program
     {
         
-         public static int ID { get; set; }
-        public static List<Staff> StaffList = new();
-        public static int ValidateStaffID()
+        public static int ID { get; set; }
+        private static List<Staff> StaffList = new();
+        private static Staff GetStaff()
+        {
+            int id = ValidateStaffID();
+            Staff staff = StaffList.FirstOrDefault(_staff => _staff.StaffID == id);
+            if (staff == null)
+            {
+                Console.WriteLine(string.Format("No staff with ID{0}", id));
+            }
+            return staff;
+        }
+        private static int ValidateStaffID()
         {
             bool IDFlag = true;
             int id=0;
@@ -20,15 +30,7 @@ namespace staff_management_2
                 try
                 {
                     id = Convert.ToInt32(Console.ReadLine());
-                    if((StaffList.FirstOrDefault(_staff => _staff.StaffID == id))==null)
-                    {
-                        Console.WriteLine("No staff with ID{0}", id);
-                        return 0;
-                    }
-                    else
-                    {
-                        IDFlag = false;
-                    }
+                    IDFlag = false;
                 }
                 catch
                 {
@@ -37,7 +39,7 @@ namespace staff_management_2
             }
             return id;
         }
-        public static void StaffChildDetails(Staff staff)
+        private static void StaffChildDetails(Staff staff)
         {
             if (staff is Teaching)
             {
@@ -55,12 +57,7 @@ namespace staff_management_2
                 x.ViewStaff();
             }
         }
-        public static void ViewStaff(int id)
-        {
-            Staff staff = StaffList.FirstOrDefault(_staff => _staff.StaffID == id);
-            StaffChildDetails(staff);
-        }
-        public static int ChoiceInput(int NumberOfChoices)
+        private static int ChoiceInput(int NumberOfChoices)
         {
             bool flag = true;
             while (flag)
@@ -129,30 +126,28 @@ namespace staff_management_2
                         }
                         break;
                     case 2:
-                        //view staff
-                        int id= ValidateStaffID();
-                        if (id != 0)
+                        Staff staff = GetStaff();
+                        if(staff != null)
                         {
-                            ViewStaff(ID);
+                            StaffChildDetails(staff);
                         }
+
                         break;
                     case 3:
                         Console.WriteLine("Update");
-                        int ViewID = ValidateStaffID();
-                        if (ViewID != 0)
+                        Staff staffToUpdate = GetStaff();
+                        if(staffToUpdate != null)
                         {
-                            Staff staff = StaffList.FirstOrDefault(_staff => _staff.StaffID == ViewID);
-                            staff.UpdateStaff(0);
-                        }                        
+                            staffToUpdate.UpdateStaff(0);
+                        }
                         break;
                     case 4:
                         Console.WriteLine("Delete.");
-                        int DeleteID = ValidateStaffID();
-                        if (DeleteID != 0)
+                        Staff staffToDelete = GetStaff();
+                        if(staffToDelete != null)
                         {
-                            Staff staffToDelete = StaffList.FirstOrDefault(_staff => _staff.StaffID == DeleteID);
                             StaffList.Remove(staffToDelete);
-                            Console.WriteLine("Staff deleted");
+                            Console.WriteLine("Staff deleted.");
                         }
                         break;
                     case 5:
