@@ -10,18 +10,7 @@ namespace staff_management_2
         
          public static int ID { get; set; }
         public static List<Staff> StaffList = new();
-        public static bool IsAStaff(int id)
-        {
-            foreach(var staff in StaffList)
-            {
-                if (staff.StaffID == id)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-        public static int StaffExistance()
+        public static int ValidateStaffID()
         {
             bool IDFlag = true;
             int id=0;
@@ -31,12 +20,15 @@ namespace staff_management_2
                 try
                 {
                     id = Convert.ToInt32(Console.ReadLine());
-                    if (!IsAStaff(id))
+                    if((StaffList.FirstOrDefault(_staff => _staff.StaffID == id))==null)
                     {
                         Console.WriteLine("No staff with ID{0}", id);
                         return 0;
                     }
-                    IDFlag = false;
+                    else
+                    {
+                        IDFlag = false;
+                    }
                 }
                 catch
                 {
@@ -65,13 +57,8 @@ namespace staff_management_2
         }
         public static void ViewStaff(int id)
         {
-            IEnumerable<Staff> staffQuery = from _staff in StaffList where _staff.StaffID == id select _staff;
-            foreach(Staff i in staffQuery)
-            {
-                Console.WriteLine(string.Format("Name: {0},  ID:{1}  Gender:{2}", i.Name, i.StaffID, i.Gender));
-                Console.WriteLine("Viewstaff method starts here");
-                StaffChildDetails(i);
-            }
+            Staff staff = StaffList.FirstOrDefault(_staff => _staff.StaffID == id);
+            StaffChildDetails(staff);
         }
         public static int ChoiceInput(int NumberOfChoices)
         {
@@ -114,7 +101,7 @@ namespace staff_management_2
                 switch (Choice)
                 {
                     case 1:
-                        Console.WriteLine("1)Teaching staff\t2)Support staff\t3)Administrative staff\t4)Exit\nChoose one.");
+                        Console.WriteLine("1)Teaching staff\t2)Support staff\t3)Administrative staff\t4)Back\nChoose one.");
                         int Choice2 = ChoiceInput(4);
                         ID++;
                         switch (Choice2)
@@ -142,32 +129,31 @@ namespace staff_management_2
                         }
                         break;
                     case 2:
-                        //view staff      
-                        ViewStaff(StaffExistance());
+                        //view staff
+                        int id= ValidateStaffID();
+                        if (id != 0)
+                        {
+                            ViewStaff(ID);
+                        }
                         break;
                     case 3:
-                        Console.WriteLine("Update");                       
-                        int ViewID = StaffExistance();
-                        foreach (var staff in StaffList)
+                        Console.WriteLine("Update");
+                        int ViewID = ValidateStaffID();
+                        if (ViewID != 0)
                         {
-                            if(staff.StaffID == ViewID)
-                            {
-                                staff.UpdateStaff(0);
-                                break;
-                            }
-                        }
+                            Staff staff = StaffList.FirstOrDefault(_staff => _staff.StaffID == ViewID);
+                            staff.UpdateStaff(0);
+                        }                        
                         break;
                     case 4:
                         Console.WriteLine("Delete.");
-                        int DeleteID = StaffExistance();
-                        foreach (var staff in StaffList)
+                        int DeleteID = ValidateStaffID();
+                        if (DeleteID != 0)
                         {
-                            if (staff.StaffID == DeleteID)
-                            {
-                                StaffList.Remove(staff);
-                                break;
-                            }
-                        }  
+                            Staff staffToDelete = StaffList.FirstOrDefault(_staff => _staff.StaffID == DeleteID);
+                            StaffList.Remove(staffToDelete);
+                            Console.WriteLine("Staff deleted");
+                        }
                         break;
                     case 5:
                         bool IsNull = true;
