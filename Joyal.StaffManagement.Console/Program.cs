@@ -6,6 +6,7 @@ using System.Text;
 using StaffManagementConsole;
 using System.Xml.Serialization;
 using System.Runtime.Serialization.Json;
+using DataLibrary;
 
 namespace StaffManagementConsole
 {
@@ -14,6 +15,20 @@ namespace StaffManagementConsole
         
         public static int ID { get; set; }
         private static List<Staff> staffList = new();
+        public static void PrintStaffList(List<Staff> stafflist)
+        {
+            bool isNull = true;
+            foreach (var SingleStaff in staffList)
+            {
+                isNull = false;
+                StaffChildDetails(SingleStaff);
+                Console.WriteLine("");
+            }
+            if (isNull)
+            {
+                Console.WriteLine("No staffs found!!!");
+            }
+        }
         private static Staff GetStaff()
         {
             int id = ValidateStaffID();
@@ -96,7 +111,7 @@ namespace StaffManagementConsole
             do
             {
                 Console.WriteLine("\tSTAFF MANAGEMENT\nSelect an operarion :");
-                Console.WriteLine("1)Add a staff\n2)View a staff\n3)Update a staff\n4)Delete a staff\n5)View all staff\n6)Exit\n7)Write and Read XML\n8)Write and Read JSON");
+                Console.WriteLine("1)Add a staff\n2)View a staff\n3)Update a staff\n4)Delete a staff\n5)View all staff\n6)Write and Read XML\n7)Write and Read JSON\n6)Exit");
                 Console.Write("\nSelect the operation: ");
                 int Choice = ChoiceInput(8);
                 switch (Choice)
@@ -155,28 +170,23 @@ namespace StaffManagementConsole
                         }
                         break;
                     case 5:
-                        bool isNull = true;
-                        foreach (var SingleStaff in staffList)
-                        {
-                            isNull = false;
-                            StaffChildDetails(SingleStaff);
-                            Console.WriteLine("");
-                        }
-                        if (isNull)
-                        {
-                            Console.WriteLine("No staffs found!!!");
-                        }
+                        PrintStaffList(staffList);
                         break;
+                    
                     case 6:
-                        flagAttribute = false;
+                        ISerializationAndDeserialization serializeDataXML = new XMLSerializationAndDeserialization();
+                        serializeDataXML.Serialize(staffList);
+                        var deserializedXMLData = serializeDataXML.DeSerialize();
+                        PrintStaffList(deserializedXMLData);
                         break;
                     case 7:
-                        WriteXML(staffList);
-                        ReadXML();
+                        ISerializationAndDeserialization serializeDataJSON = new JSONSerializationAndDeserialization();
+                        serializeDataJSON.Serialize(staffList);
+                        var deserializedJSONData = serializeDataJSON.DeSerialize();
+                        PrintStaffList(deserializedJSONData);
                         break;
                     case 8:
-                        WriteJSON(staffList);
-                        ReadJSON();
+                        flagAttribute = false;
                         break;
                     default:
                         Console.WriteLine("Wrong choice."); //no need of default
@@ -184,64 +194,6 @@ namespace StaffManagementConsole
                 }                
             } while (flagAttribute == true);
             Console.ReadLine();
-        }
-        public static void WriteXML(List<Staff> staffList)
-        {
-            //List<Staff> staffList = new();// set this stafflist to parameter
-            System.Xml.Serialization.XmlSerializer writer = new System.Xml.Serialization.XmlSerializer(typeof(List<Staff>));
-            var path = new System.IO.StreamWriter(@"C:\Work\JoyalTraining\Staff.Management\XMLSerialisation.xml");
-            writer.Serialize(path, staffList);
-            path.Close();
-        }
-        public static void ReadXML()
-        {
-            //List<Staff> staffList = new();// set this stafflist to parameter
-            var reader = new System.Xml.Serialization.XmlSerializer(typeof(List<Staff>));
-            System.IO.StreamReader file = new System.IO.StreamReader(@"C:\Work\JoyalTraining\Staff.Management\XMLSerialisation.xml");
-            List<Staff> deserializedStaffList = (List<Staff>)reader.Deserialize(file);
-            file.Close();
-
-            bool isNull = true;
-            foreach (var SingleStaff in staffList)
-            {
-                isNull = false;
-                StaffChildDetails(SingleStaff);
-                Console.WriteLine("");
-            }
-            if (isNull)
-            {
-                Console.WriteLine("No staffs found!!!");
-            }
-        }
-        public static void WriteJSON(List<Staff> staffList)
-        {
-            var path = @"C:\Work\JoyalTraining\Staff.Management\JSONSerialisation.json";
-            using (var stream = new FileStream(path, FileMode.Create))
-            {
-                DataContractJsonSerializer JSONStream = new DataContractJsonSerializer(typeof(List<Staff>));
-                JSONStream.WriteObject(stream, staffList);
-            }
-        }
-        public static void ReadJSON()
-        {
-            var path = @"C:\Work\JoyalTraining\Staff.Management\JSONSerialisation.json";
-            using (var stream = new FileStream(path, FileMode.Open))
-            {
-                DataContractJsonSerializer JSONStream = new DataContractJsonSerializer(typeof(List<Staff>));
-                List<Staff> JSONStaffList = (List<Staff>)JSONStream.ReadObject(stream);
-                bool isNull = true;
-                foreach (var SingleStaff in JSONStaffList)
-                {
-                    isNull = false;
-                    StaffChildDetails(SingleStaff);
-                    Console.WriteLine("");
-                }
-                if (isNull)
-                {
-                    Console.WriteLine("No staffs found!!!");
-                }
-
-            }
         }
     }
 }
