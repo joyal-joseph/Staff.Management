@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfStaff xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Staff xsi:type="Teaching">
+    <StaffID>1</StaffID>
+    <Name>joyal</Name>
+    <Age>23</Age>
+    <Gender>Male</Gender>
+    <DailyWage>1000</DailyWage>
+    <Subject>sub1</Subject>
+  </Staff>
+</ArrayOfStaff>

@@ -3,10 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static StaffManagementConsole.Staff;
+using System.Xml.Serialization;
+using System.Runtime.Serialization.Json;
+using System.Runtime.Serialization;
 
 namespace StaffManagementConsole
-{    
-    public abstract class Staff
+{
+    [XmlInclude(typeof(Teaching))]
+    [XmlInclude(typeof(Administrative))]
+    [XmlInclude(typeof(Support))]
+    [KnownType(typeof(Teaching))]
+    [KnownType(typeof(Administrative))]
+    [KnownType(typeof(Support))]
+
+    public abstract class Staff : IStaffOperation
     {
         public int StaffID { get; set; }
         public string Name { get; set; }
@@ -131,5 +142,19 @@ namespace StaffManagementConsole
             }
         }
         public abstract void Salary();       
+    }
+    public interface IStaffOperation
+    {
+        public int StaffID { get; set; }
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public GenderType Gender { get; set; }
+        public int DailyWage { get; set; }
+        
+        public int AgeInput();
+        public void AddStaff(int x);
+        public void ViewStaff();
+        public void UpdateStaff(int choice);
+        public GenderType GenderInput();
     }
 }
