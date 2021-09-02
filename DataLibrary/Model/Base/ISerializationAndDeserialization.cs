@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using StaffManagementConsole;
 
 namespace DataLibrary
 {
     public interface ISerializationAndDeserialization
     {
-        public void Serialize(List<Staff> staffs);
-        public List<Staff> DeSerialize();
+        public void Serialize(List<IStaffOperation> staffs, string path);
+        public List<IStaffOperation> DeSerialize(string path);
     }
 }

@@ -2,10 +2,26 @@
 <ArrayOfStaff xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Staff xsi:type="Teaching">
     <StaffID>1</StaffID>
-    <Name>teacher1</Name>
-    <Age>23</Age>
+    <Name>Teacher1</Name>
+    <Age>34</Age>
     <Gender>Male</Gender>
     <DailyWage>1000</DailyWage>
-    <Subject>sub-1</Subject>
+    <Subject>Subject1</Subject>
+  </Staff>
+  <Staff xsi:type="Support">
+    <StaffID>2</StaffID>
+    <Name>Supporting staff1</Name>
+    <Age>56</Age>
+    <Gender>Female</Gender>
+    <DailyWage>600</DailyWage>
+    <Lab>Lab1</Lab>
+  </Staff>
+  <Staff xsi:type="Administrative">
+    <StaffID>3</StaffID>
+    <Name>Admin1</Name>
+    <Age>54</Age>
+    <Gender>Other</Gender>
+    <DailyWage>800</DailyWage>
+    <Section>Sec-A</Section>
   </Staff>
 </ArrayOfStaff>

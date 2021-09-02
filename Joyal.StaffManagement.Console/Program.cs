@@ -1,27 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.IO;
-using System.Text;
-using StaffManagementConsole;
-using System.Xml.Serialization;
-using System.Runtime.Serialization.Json;
 using DataLibrary;
+using System.Configuration;
 
 namespace StaffManagementConsole
 {
     class Program
     {
-        
         public static int ID { get; set; }
-        private static List<Staff> staffList = new();
-        public static void PrintStaffList(List<Staff> stafflist)
+        private static List<IStaffOperation> staffList = new();
+        public static void SerializeAndPrintDeserializedData(ISerializationAndDeserialization serializeData, string path)
+        {
+            serializeData.Serialize(staffList, path); 
+            var deserializedData = serializeData.DeSerialize(path);
+            PrintStaffList(deserializedData);
+
+        }
+        public static void PrintStaffList(List<IStaffOperation> stafflist)
         {
             bool isNull = true;
-            foreach (var SingleStaff in staffList)
+            foreach (var singleStaff in staffList)
             {
                 isNull = false;
-                StaffChildDetails(SingleStaff);
+                singleStaff.ViewStaff();
                 Console.WriteLine("");
             }
             if (isNull)
@@ -29,10 +31,10 @@ namespace StaffManagementConsole
                 Console.WriteLine("No staffs found!!!");
             }
         }
-        private static Staff GetStaff()
+        private static IStaffOperation GetStaff()
         {
             int id = ValidateStaffID();
-            Staff staff = staffList.FirstOrDefault(_staff => _staff.StaffID == id);
+            IStaffOperation staff = staffList.FirstOrDefault(_staff => _staff.StaffID == id);
             if (staff == null)
             {
                 Console.WriteLine(string.Format("No staff with ID{0}", id));
@@ -57,24 +59,6 @@ namespace StaffManagementConsole
                 }
             }
             return id;
-        }
-        private static void StaffChildDetails(Staff staff)
-        {
-            if (staff is Teaching)
-            {
-                Teaching x = (Teaching)staff;
-                x.ViewStaff();
-            }
-            else if (staff is Support)
-            {
-                Support x = (Support)staff;
-                x.ViewStaff();
-            }
-            else if (staff is Administrative)
-            {
-                Administrative x = (Administrative)staff;
-                x.ViewStaff();
-            }
         }
         private static int ChoiceInput(int NumberOfChoices)
         {
@@ -111,7 +95,7 @@ namespace StaffManagementConsole
             do
             {
                 Console.WriteLine("\tSTAFF MANAGEMENT\nSelect an operarion :");
-                Console.WriteLine("1)Add a staff\n2)View a staff\n3)Update a staff\n4)Delete a staff\n5)View all staff\n6)Write and Read XML\n7)Write and Read JSON\n6)Exit");
+                Console.WriteLine("1)Add a staff\n2)View a staff\n3)Update a staff\n4)Delete a staff\n5)View all staff\n6)Write and Read XML\n7)Write and Read JSON\n8)Exit");
                 Console.Write("\nSelect the operation: ");
                 int Choice = ChoiceInput(8);
                 switch (Choice)
@@ -120,22 +104,17 @@ namespace StaffManagementConsole
                         Console.WriteLine("1)Teaching staff\t2)Support staff\t3)Administrative staff\t4)Back\nChoose one.");
                         int Choice2 = ChoiceInput(4);
                         ID++;
+                        IStaffOperation newStaff=null;//new
                         switch (Choice2)
                         {
                             case 1:
-                                Teaching teacher = new Teaching();
-                                teacher.AddStaff(ID);
-                                staffList.Add(teacher);
+                                newStaff = new Teaching();
                                 break;
                             case 2:
-                                Support supportStaff = new Support();
-                                supportStaff.AddStaff(ID);
-                                staffList.Add(supportStaff);
+                                newStaff = new Support();
                                 break;
                             case 3:
-                                Administrative admininstrator = new Administrative();
-                                admininstrator.AddStaff(ID);
-                                staffList.Add(admininstrator);
+                                newStaff = new Administrative();
                                 break;
                             case 4:
                                 break;
@@ -143,18 +122,20 @@ namespace StaffManagementConsole
                                 Console.WriteLine("Wrong choice");
                                 break;
                         }
+                        newStaff.AddStaff(ID);
+                        staffList.Add(newStaff);
                         break;
                     case 2:
-                        Staff staff = GetStaff();
+                        IStaffOperation staff = GetStaff();
                         if(staff != null)
                         {
-                            StaffChildDetails(staff);
+                            staff.ViewStaff();
                         }
 
                         break;
                     case 3:
                         Console.WriteLine("Update");
-                        Staff staffToUpdate = GetStaff();
+                        IStaffOperation staffToUpdate = GetStaff();
                         if(staffToUpdate != null)
                         {
                             staffToUpdate.UpdateStaff(0);
@@ -162,7 +143,7 @@ namespace StaffManagementConsole
                         break;
                     case 4:
                         Console.WriteLine("Delete.");
-                        Staff staffToDelete = GetStaff();
+                        IStaffOperation staffToDelete = GetStaff();
                         if(staffToDelete != null)
                         {
                             staffList.Remove(staffToDelete);
@@ -174,16 +155,15 @@ namespace StaffManagementConsole
                         break;
                     
                     case 6:
-                        ISerializationAndDeserialization serializeDataXML = new XMLSerializationAndDeserialization();
-                        serializeDataXML.Serialize(staffList);
-                        var deserializedXMLData = serializeDataXML.DeSerialize();
-                        PrintStaffList(deserializedXMLData);
+                        var _appSettings = ConfigurationManager.AppSettings;
+                        string _path = _appSettings["XMLDataPath"] ?? "not found";
+                        SerializeAndPrintDeserializedData(new XMLSerializationAndDeserialization(), _path);
                         break;
                     case 7:
-                        ISerializationAndDeserialization serializeDataJSON = new JSONSerializationAndDeserialization();
-                        serializeDataJSON.Serialize(staffList);
-                        var deserializedJSONData = serializeDataJSON.DeSerialize();
-                        PrintStaffList(deserializedJSONData);
+                        var appSettings = ConfigurationManager.AppSettings;
+                        string path = appSettings["JSONDataPath"]??"not found";
+                        
+                        SerializeAndPrintDeserializedData(new JSONSerializationAndDeserialization(), path);
                         break;
                     case 8:
                         flagAttribute = false;

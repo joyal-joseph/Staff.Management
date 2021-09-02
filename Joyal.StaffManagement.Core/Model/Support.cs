@@ -1,21 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
-using System.Runtime.Serialization.Json;
 
 
 namespace StaffManagementConsole
 {
-    
+
     public class Support : Staff
     {
-        //public int DailyWage { get => DailyWage; set => DailyWage = 600; }
         public string Lab { get; set; }
-        
-
         public override void AddStaff(int ID)
         {
             base.AddStaff(ID);
