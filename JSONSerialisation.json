@@ -1,1 +1,1 @@
-[{"__type":"Teaching:#StaffManagementConsole","Age":34,"DailyWage":1000,"Gender":0,"Name":"Teacher1","StaffID":1,"Subject":"Subject1"},{"__type":"Support:#StaffManagementConsole","Age":56,"DailyWage":600,"Gender":1,"Name":"Supporting staff1","StaffID":2,"Lab":"Lab1"},{"__type":"Administrative:#StaffManagementConsole","Age":54,"DailyWage":800,"Gender":2,"Name":"Admin1","StaffID":3,"Section":"Sec-A"}]
+[{"__type":"Teaching:#StaffManagementConsole","Age":23,"DailyWage":1000,"Gender":0,"Name":"newTeacher 7:22","StaffID":1,"Subject":"subject 7:22"}]

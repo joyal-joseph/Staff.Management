@@ -3,6 +3,9 @@ using System.IO;
 using System.Runtime.Serialization.Json;
 using StaffManagementConsole;
 using System.Linq;
+using System.Xml;
+using System.Text.Json;
+
 namespace DataLibrary
 {
     public class JSONSerializationAndDeserialization : ISerializationAndDeserialization
@@ -22,7 +25,9 @@ namespace DataLibrary
             {
                 DataContractJsonSerializer JSONStream = new DataContractJsonSerializer(typeof(List<Staff>));
                 List<Staff> JSONStaffList = (List<Staff>)JSONStream.ReadObject(stream);
-                return JSONStaffList.Select(s => (IStaffOperation)s).ToList(); ;
+                return JSONStaffList.Select(s => (IStaffOperation)s).ToList() ;
+
+                
             }
         }
     }

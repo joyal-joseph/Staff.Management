@@ -3,24 +3,41 @@ using System.Collections.Generic;
 using System.Linq;
 using DataLibrary;
 using System.Configuration;
+using DocumentFormat.OpenXml;
 
 namespace StaffManagementConsole
 {
     class Program
     {
         public static int ID { get; set; }
+        
         private static List<IStaffOperation> staffList = new();
-        public static void SerializeAndPrintDeserializedData(ISerializationAndDeserialization serializeData, string path)
+        private static List<IStaffOperation> GetStoredData(int choice) 
         {
-            serializeData.Serialize(staffList, path); 
-            var deserializedData = serializeData.DeSerialize(path);
-            PrintStaffList(deserializedData);
+            switch (choice) 
+            { 
+                case 1:
+                    //XML
+                    ISerializationAndDeserialization deserializeObjectXML = new XMLSerializationAndDeserialization();
+                    var _appSettings__ = ConfigurationManager.AppSettings;
+                    string XMLPath = _appSettings__["XMLDataPath"] ?? "not found";
+                    var deserializedXMLData = deserializeObjectXML.DeSerialize(XMLPath);
+                    return deserializedXMLData;
+                case 2:
+                    //JSON
+                    ISerializationAndDeserialization deserializeDataJSON = new JSONSerializationAndDeserialization();
+                    var appSettings = ConfigurationManager.AppSettings;
+                    string jsonPath = appSettings["JSONDataPath"] ?? "not found";
+                    var deserializedJSONData = deserializeDataJSON.DeSerialize(jsonPath);
+                    return deserializedJSONData;
 
+            }
+            return null; 
         }
         public static void PrintStaffList(List<IStaffOperation> stafflist)
         {
             bool isNull = true;
-            foreach (var singleStaff in staffList)
+            foreach (var singleStaff in stafflist)
             {
                 isNull = false;
                 singleStaff.ViewStaff();
@@ -92,12 +109,15 @@ namespace StaffManagementConsole
         static void Main(string[] args)
         {
             bool flagAttribute = true;
+            ID = GetStoredData(1).Count;
+            bool dataTakenFromStorage = false;
             do
             {
                 Console.WriteLine("\tSTAFF MANAGEMENT\nSelect an operarion :");
-                Console.WriteLine("1)Add a staff\n2)View a staff\n3)Update a staff\n4)Delete a staff\n5)View all staff\n6)Write and Read XML\n7)Write and Read JSON\n8)Exit");
+                Console.Write("1)Add a staff\n2)View a staff\n3)Update a staff\n4)Delete a staff\n5)View all staff\n");
+                Console.WriteLine("6)Save data\n7)Read Data\n8)Exit");
                 Console.Write("\nSelect the operation: ");
-                int Choice = ChoiceInput(8);
+                int Choice = ChoiceInput(10);
                 switch (Choice)
                 {
                     case 1:
@@ -115,8 +135,6 @@ namespace StaffManagementConsole
                                 break;
                             case 3:
                                 newStaff = new Administrative();
-                                break;
-                            case 4:
                                 break;
                             default: // no need of default
                                 Console.WriteLine("Wrong choice");
@@ -151,22 +169,53 @@ namespace StaffManagementConsole
                         }
                         break;
                     case 5:
+                        //return first.Concat(second).ToList()
+                        //PrintStaffList(staffList.Concat(GetStoredData(1)).ToList());
+                        if (dataTakenFromStorage == false)
+                        {
+                            Console.WriteLine("Read data from option 7 to include stored data.");
+                        }
                         PrintStaffList(staffList);
                         break;
                     
-                    case 6:
-                        var _appSettings = ConfigurationManager.AppSettings;
-                        string _path = _appSettings["XMLDataPath"] ?? "not found";
-                        SerializeAndPrintDeserializedData(new XMLSerializationAndDeserialization(), _path);
-                        break;
-                    case 7:
-                        var appSettings = ConfigurationManager.AppSettings;
-                        string path = appSettings["JSONDataPath"]??"not found";
-                        
-                        SerializeAndPrintDeserializedData(new JSONSerializationAndDeserialization(), path);
-                        break;
+                    
                     case 8:
                         flagAttribute = false;
+                        break;
+                    case 6:
+                        //save data
+                        Console.WriteLine("1)Save as XML\n2)Save as JSON");
+                        int dataChoiceForRead = ChoiceInput(2);
+                        var _appSettings = ConfigurationManager.AppSettings;
+                        switch (dataChoiceForRead)
+                        {
+                            case 1:
+                                //XML
+                                ISerializationAndDeserialization serializeDataXML = new XMLSerializationAndDeserialization();
+                                string _XMLPath = _appSettings["XMLDataPath"] ?? "not found";
+                                serializeDataXML.Serialize(staffList, _XMLPath);
+                                break;
+                            case 2:
+                                //JSON
+                                ISerializationAndDeserialization serializeDataJSON = new JSONSerializationAndDeserialization();
+                                string _JSONPath = _appSettings["JSONDataPath"] ?? "not found";
+                                serializeDataJSON.Serialize(staffList, _JSONPath);
+                                break;
+                        }
+                        break;
+                    case 7:
+                        if (dataTakenFromStorage == false)
+                        {
+                            Console.WriteLine("1)Read as XML\n2)Read as JSON");
+                            int choice = ChoiceInput(2);
+                            staffList = staffList.Concat(GetStoredData(choice)).ToList();
+                            dataTakenFromStorage = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Data already included!!!");
+                        }
+                        PrintStaffList(staffList);
                         break;
                     default:
                         Console.WriteLine("Wrong choice."); //no need of default
@@ -177,3 +226,5 @@ namespace StaffManagementConsole
         }
     }
 }
+
+
