@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DataLibrary\DataLibrary.csproj" />
     <ProjectReference Include="..\Joyal.StaffManagement.Core\Joyal.StaffManagement.Core.csproj" />
+    <ProjectReference Include="..\StaffDatabaseHelper\StaffDatabaseHelper.csproj" />
   </ItemGroup>
 
 </Project>

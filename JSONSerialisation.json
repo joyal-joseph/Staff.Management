@@ -1,1 +1,23 @@
-[{"__type":"Teaching:#StaffManagementConsole","Age":23,"DailyWage":1000,"Gender":0,"Name":"newTeacher 7:22","StaffID":1,"Subject":"subject 7:22"}]
+[
+  {
+    "__type": "Teaching:#StaffManagementConsole",
+    "Age": 45,
+    "DailyWage": 1000,
+    "Gender": 0,
+    "JobType": "Teacher",
+    "Name": "jOYAL",
+    "StaffID": 1,
+    "ClassTeacher": "",
+    "Subject": "mATHS"
+  },
+  {
+    "__type": "Support:#StaffManagementConsole",
+    "Age": 45,
+    "DailyWage": 600,
+    "Gender": 1,
+    "JobType": "Support",
+    "Name": "Joyal",
+    "StaffID": 2,
+    "Lab": "Lab2"
+  }
+]

@@ -7,12 +7,13 @@ namespace StaffManagementConsole
     public class Administrative : Staff
     {
         public string Section { get; set; }
-        public override void AddStaff(int ID)
+        public override void AddOrUpdateStaff(int ID)
         {
 
-            base.AddStaff(ID);
+            base.AddOrUpdateStaff(ID);
             this.Section = Input("section");
             this.DailyWage = 800;
+            this.JobType = "Admin";
         }
         public override void ViewStaff()
         {

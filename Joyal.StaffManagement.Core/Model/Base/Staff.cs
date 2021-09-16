@@ -14,6 +14,7 @@ namespace StaffManagementConsole
 
     public abstract class Staff : IStaffOperation
     {
+        public string JobType { get; set; }
         public int StaffID { get; set; }
         public string Name { get; set; }
         public int Age { get; set; }
@@ -21,9 +22,9 @@ namespace StaffManagementConsole
         public int DailyWage { get; set; }
         public enum GenderType
         {
-            Male,
-            Female,
-            Other
+            M,
+            F,
+            O
         }
         public int AgeInput()
         {
@@ -92,11 +93,11 @@ namespace StaffManagementConsole
                     switch (gender)
                     {
                         case "M":
-                            return GenderType.Male;
+                            return GenderType.M;
                         case "F":
-                            return GenderType.Female;
+                            return GenderType.F;
                         case "O":
-                            return GenderType.Other;
+                            return GenderType.O;
                     }
                 }
                 else
@@ -105,9 +106,9 @@ namespace StaffManagementConsole
                     flag = true;
                 }
             }
-            return GenderType.Other;
+            return GenderType.O;
         }
-        public virtual void AddStaff(int ID)
+        public virtual void AddOrUpdateStaff(int ID)
         {
             this.Name = Input("name");
             this.Age = AgeInput();
@@ -140,6 +141,7 @@ namespace StaffManagementConsole
     }
     public interface IStaffOperation
     {
+        public string JobType { get; set; }
         public int StaffID { get; set; }
         public string Name { get; set; }
         public int Age { get; set; }
@@ -147,7 +149,7 @@ namespace StaffManagementConsole
         public int DailyWage { get; set; }
         
         public int AgeInput();
-        public void AddStaff(int x);
+        public void AddOrUpdateStaff(int x);
         public void ViewStaff();
         public void UpdateStaff(int choice);
         public GenderType GenderInput();
