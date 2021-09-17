@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using DataLibrary;
 using System.Configuration;
-using DocumentFormat.OpenXml;
 using StaffDatabaseHelper;
 
 namespace StaffManagementConsole
@@ -13,41 +12,39 @@ namespace StaffManagementConsole
         public static int ID { get; set; }
         
         private static List<IStaffOperation> staffList = new();
-        static string SQLConnectionString = ConfigurationManager.AppSettings["SQLConnectionString"] ?? "not found";
-        static string UseDB = ConfigurationManager.AppSettings["UseDB"] ?? "not found";
-        static IStaffDatabaseHandler DBHandler = new StaffDatabaseSQLHandler(SQLConnectionString);
+        static string DataMode = ConfigurationManager.AppSettings["DataMode"];
+        static IStaffDatabaseHandler DBHandler = new StaffDatabaseSQLHandler(ConfigurationManager.AppSettings["SQLConnectionString"]);
+
         private static List<IStaffOperation> GetStoredData(string choice) 
         {
+            List < IStaffOperation > storedStaffList = new();
             switch (choice) 
             { 
                 case "XML":
-                    //XML
                     ISerializationAndDeserialization deserializeObjectXML = new XMLSerializationAndDeserialization();
                     var _appSettings__ = ConfigurationManager.AppSettings;
-                    string XMLPath = _appSettings__["XMLDataPath"] ?? "not found";
+                    string XMLPath = _appSettings__["XMLDataPath"];
                     var deserializedXMLData = deserializeObjectXML.DeSerialize(XMLPath);
-                    return deserializedXMLData;
+                    storedStaffList= deserializedXMLData;
+                    break;
                 case "JSON":
-                    //JSON
                     ISerializationAndDeserialization deserializeDataJSON = new JSONSerializationAndDeserialization();
                     var appSettings = ConfigurationManager.AppSettings;
-                    string jsonPath = appSettings["JSONDataPath"] ?? "not found";
+                    string jsonPath = appSettings["JSONDataPath"];
                     var deserializedJSONData = deserializeDataJSON.DeSerialize(jsonPath);
-                    return deserializedJSONData;
-
+                    storedStaffList= deserializedJSONData;
+                    break;
             }
-            return null; 
+            return storedStaffList; 
         }
         public static void PrintStaffList(List<IStaffOperation> stafflist)
         {
-            bool isNull = true;
             foreach (var singleStaff in stafflist)
             {
-                isNull = false;
                 singleStaff.ViewStaff();
                 Console.WriteLine("");
             }
-            if (isNull)
+            if (stafflist is null)
             {
                 Console.WriteLine("No staffs found!!!");
             }
@@ -64,15 +61,14 @@ namespace StaffManagementConsole
         }
         private static int ValidateStaffID()
         {
-            bool IDFlag = true;
             int id=0;
-            while (IDFlag)
+            while (true)
             {
                 Console.WriteLine("Enter ID : ");
                 try
                 {
                     id = Convert.ToInt32(Console.ReadLine());
-                    IDFlag = false;
+                    break;
                 }
                 catch
                 {
@@ -83,8 +79,7 @@ namespace StaffManagementConsole
         }
         private static int ChoiceInput(int NumberOfChoices)
         {
-            bool flag = true;
-            while (flag)
+            while (true)
             {
                 int y;
                 try
@@ -96,31 +91,26 @@ namespace StaffManagementConsole
                     }
                     else
                     {
-                        flag = false;
                         return y;
                     }
                 }
                 catch
                 {
                     Console.WriteLine("The choice should be an integer. You entered wrong type.");
-                    flag = true;
                 }
-                flag = true;
             }
-            return 0;
         }
 
         static void Main(string[] args)
         {
             bool flagAttribute = true;
             bool dataTakenFromStorage = false;
-            //######### NON-DB SCENARIO ############################
-            if (UseDB != "True")
+            //######## NON-DB SCENARIO #######
+            if (DataMode != "DB")
             {
                 do
                 {
-                    ID = GetStoredData(UseDB).Count;
-                    //ID = 0;
+                    ID = GetStoredData(DataMode).Count;
                     Console.WriteLine("\tSTAFF MANAGEMENT\nSelect an operarion :");
                     Console.Write("1)Add a staff\n2)View a staff\n3)Update a staff\n4)Delete a staff\n5)View all staff\n");
                     Console.WriteLine("6)Export data\n7)Import Data\n8)Exit");
@@ -132,12 +122,11 @@ namespace StaffManagementConsole
                             Console.WriteLine("1)Teaching staff\t2)Support staff\t3)Administrative staff\nChoose one.");
                             int Choice2 = ChoiceInput(4);
                             ID++;
-                            IStaffOperation newStaff = null;//new
+                            IStaffOperation newStaff = null;
                             switch (Choice2)
                             {
                                 case 1:
                                     newStaff = new Teaching { JobType = "Teacher" };
-                                    //newStaff.JobType = 'Teacher';
                                     break;
                                 case 2:
                                     newStaff = new Support { JobType = "Support" };
@@ -145,7 +134,7 @@ namespace StaffManagementConsole
                                 case 3:
                                     newStaff = new Administrative { JobType = "Admin" };
                                     break;
-                                default: // no need of default
+                                default:
                                     Console.WriteLine("Wrong choice");
                                     break;
                             }
@@ -189,18 +178,15 @@ namespace StaffManagementConsole
                             break;
 
                         case 6:
-                            //save data
                             var _appSettings = ConfigurationManager.AppSettings;
-                            switch (UseDB)
+                            switch (DataMode)
                             {
                                 case "XML":
-                                    //XML
                                     ISerializationAndDeserialization serializeDataXML = new XMLSerializationAndDeserialization();
                                     string _XMLPath = _appSettings["XMLDataPath"] ?? "not found";
                                     serializeDataXML.Serialize(staffList, _XMLPath);
                                     break;
                                 case "JSON":
-                                    //JSON
                                     ISerializationAndDeserialization serializeDataJSON = new JSONSerializationAndDeserialization();
                                     string _JSONPath = _appSettings["JSONDataPath"] ?? "not found";
                                     serializeDataJSON.Serialize(staffList, _JSONPath);
@@ -210,7 +196,7 @@ namespace StaffManagementConsole
                         case 7:
                             if (dataTakenFromStorage == false)
                             {
-                                staffList = staffList.Concat(GetStoredData(UseDB)).ToList();
+                                staffList = staffList.Concat(GetStoredData(DataMode)).ToList();
                                 dataTakenFromStorage = true;
                             }
                             else
@@ -224,21 +210,21 @@ namespace StaffManagementConsole
                             flagAttribute = false;
                             break;
                         default:
-                            Console.WriteLine("Wrong choice."); //no need of default
+                            Console.WriteLine("Wrong choice.");
                             break;
                     }
                 } while (flagAttribute == true);
             }
             //#######   USING DB STARTS HERE ##########
 
-            if (UseDB == "True")
+            if (DataMode == "DB")
             {
                 bool DBflagAttribute = true;
                 do
                 {
                     Console.WriteLine("\tSTAFF MANAGEMENT\nSelect an operarion :");
                     Console.Write("1)Add a staff\n2)View a staff\n3)Update a staff\n4)Delete a staff\n5)View all staff\n");
-                    Console.WriteLine("6)Export data from DB\n7)Import Data and export to DB\n8)Exit");
+                    Console.WriteLine("6)Import data from DB\n7)Import Data and export to DB\n8)Exit");
                     Console.Write("\nSelect the operation: ");
                     int Choice = ChoiceInput(8);
                     switch (Choice)
@@ -246,12 +232,11 @@ namespace StaffManagementConsole
                         case 1:
                             Console.WriteLine("1)Teaching staff\t2)Support staff\t3)Administrative staff\nChoose one.");
                             int Choice2 = ChoiceInput(3);
-                            IStaffOperation newStaff = null;//new
+                            IStaffOperation newStaff = null;
                             switch (Choice2)
                             {
                                 case 1:
                                     newStaff = new Teaching { JobType = "Teacher" };
-                                    //newStaff.JobType = 'Teacher';
                                     break;
                                 case 2:
                                     newStaff = new Support { JobType = "Support" };
@@ -259,7 +244,7 @@ namespace StaffManagementConsole
                                 case 3:
                                     newStaff = new Administrative { JobType = "Admin" };
                                     break;
-                                default: // no need of default
+                                default: 
                                     Console.WriteLine("Wrong choice");
                                     break;
                             }
@@ -288,12 +273,11 @@ namespace StaffManagementConsole
                             int id = Convert.ToInt32(Console.ReadLine());
                             Console.WriteLine("1)Teaching staff\t2)Support staff\t3)Administrative staff\t4)Back\nChoose one.");
                             int Choice3 = ChoiceInput(4);
-                            IStaffOperation UpdateStaff = null;//new
+                            IStaffOperation UpdateStaff = null;
                             switch (Choice3)
                             {
                                 case 1:
                                     UpdateStaff = new Teaching { JobType = "Teacher" };
-                                    //newStaff.JobType = 'Teacher';
                                     break;
                                 case 2:
                                     UpdateStaff = new Support { JobType = "Support" };
@@ -322,29 +306,25 @@ namespace StaffManagementConsole
                             break;
 
                         case 6:
-                            //take data from DB and added to XML/JSON
                             Console.WriteLine("1)Save as XML\n2)Save as JSON");
                             int dataChoiceForRead = ChoiceInput(2);
-                            staffList = DBHandler.ViewAllStaff();  //read from DB and store to XML/JSON as choice
+                            staffList = DBHandler.ViewAllStaff();  
                             var _appSettings = ConfigurationManager.AppSettings;
                             switch (dataChoiceForRead)
                             {
                                 case 1:
-                                    //XML
                                     ISerializationAndDeserialization serializeDataXML = new XMLSerializationAndDeserialization();
-                                    string _XMLPath = _appSettings["XMLDataPath"] ?? "not found";
+                                    string _XMLPath = _appSettings["XMLDataPath"] ;
                                     serializeDataXML.Serialize(staffList, _XMLPath);
                                     break;
                                 case 2:
-                                    //JSON
                                     ISerializationAndDeserialization serializeDataJSON = new JSONSerializationAndDeserialization();
-                                    string _JSONPath = _appSettings["JSONDataPath"] ?? "not found";
+                                    string _JSONPath = _appSettings["JSONDataPath"] ;
                                     serializeDataJSON.Serialize(staffList, _JSONPath);
                                     break;
                             }
                             break;
                         case 7:
-                            //ReadData from XML/JSON and store it to DB (bulk insert)
                             if (dataTakenFromStorage == false)
                             {
                                 Console.WriteLine("1)Read from XML and export to DB\n2)Read from JSON and export to DB");
@@ -370,7 +350,7 @@ namespace StaffManagementConsole
                             DBflagAttribute = false;
                             break;
                         default:
-                            Console.WriteLine("Wrong choice."); //no need of default
+                            Console.WriteLine("Wrong choice."); 
                             break;
                     }
                 } while (DBflagAttribute == true);

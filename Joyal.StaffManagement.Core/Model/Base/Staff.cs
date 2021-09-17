@@ -58,55 +58,40 @@ namespace StaffManagementConsole
         public string Input(string x)
         {
             bool flag = true;
-            string name;
+            string name = null;
             while (flag)
             {
                 Console.WriteLine(string.Format("Enter {0}",x));
                 name =Console.ReadLine();
                 if (name == "")
                 {
-                    flag = true;
                     Console.WriteLine(string.Format("The {0} cannot be empty.",x));
                 }
                 else
                 {
-                    return name;
+                    flag = false;
                 }
             }
-            return (null);
+            return name;
         }
         public GenderType GenderInput()
         {
-            bool flag = true;
             string gender;
-            while (flag)
+            GenderType Gender= new();
+            while (true)
             {
                 Console.WriteLine("Enter gender: [M/F/O]");
                 gender = Console.ReadLine();
-                if(gender == "")
+                 if (Enum.TryParse<GenderType>(gender, out Gender) )
                 {
-                    flag = true;
-                    Console.WriteLine("Gender cannot be empty");
-                }
-                else if(gender=="M" || gender =="F" || gender=="O")
-                {
-                    switch (gender)
-                    {
-                        case "M":
-                            return GenderType.M;
-                        case "F":
-                            return GenderType.F;
-                        case "O":
-                            return GenderType.O;
-                    }
+                    break;
                 }
                 else
                 {
                     Console.WriteLine("Enter correct gender type.");
-                    flag = true;
                 }
             }
-            return GenderType.O;
+            return Gender;
         }
         public virtual void AddOrUpdateStaff(int ID)
         {
@@ -117,7 +102,7 @@ namespace StaffManagementConsole
         }
         public  virtual void ViewStaff()
         {
-            Console.WriteLine(String.Format("ID:{3}\nName: {0}\nAge: {1}\nGender: {2}", this.Name, this.Age, this.Gender,this.StaffID));            
+            Console.WriteLine(String.Format("ID:{3}\nName: {0}\nAge: {1}\nGender: {2}", this.Name, this.Age, this.Gender,this.StaffID));
         }
         public virtual void UpdateStaff(int choice) 
         {
@@ -131,9 +116,6 @@ namespace StaffManagementConsole
                     break;
                 case 3:
                     this.Gender = GenderInput();
-                    break;
-                default:
-                    //no default value required here
                     break;
             }
         }
