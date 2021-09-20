@@ -82,13 +82,21 @@ namespace StaffManagementConsole
             {
                 Console.WriteLine("Enter gender: [M/F/O]");
                 gender = Console.ReadLine();
-                 if (Enum.TryParse<GenderType>(gender, out Gender) )
+                try
                 {
-                    break;
+                    Int16.Parse(gender);
+                    Console.WriteLine("Integers not allowed.");
                 }
-                else
+                catch (Exception)
                 {
-                    Console.WriteLine("Enter correct gender type.");
+                    if (Enum.TryParse<GenderType>(gender, out Gender))
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Enter correct gender type.");
+                    }
                 }
             }
             return Gender;
