@@ -49,9 +49,7 @@ namespace StaffManagementConsole
                 catch
                 {
                     Console.WriteLine("The age should be an integer. You entered wrong type.");
-                    flag = true;
                 }
-                flag = true;
             }
             return 0;
         }
@@ -138,10 +136,8 @@ namespace StaffManagementConsole
         public GenderType Gender { get; set; }
         public int DailyWage { get; set; }
         
-        public int AgeInput();
         public void AddOrUpdateStaff(int x);
         public void ViewStaff();
         public void UpdateStaff(int choice);
-        public GenderType GenderInput();
     }
 }

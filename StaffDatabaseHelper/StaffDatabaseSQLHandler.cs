@@ -146,29 +146,29 @@ namespace StaffDatabaseHelper
                         {
                             case "Teacher":
                                 staff = new Teaching();
-                                ((Teaching)staff).Subject = Convert.ToString(QueryResult[6]);
-                                ((Teaching)staff).ClassTeacher = Convert.ToString(QueryResult[7]);
+                                ((Teaching)staff).Subject = Convert.ToString(reader.GetValue(reader.GetOrdinal("Subject")));
+                                ((Teaching)staff).ClassTeacher = Convert.ToString(reader.GetValue(reader.GetOrdinal("Class Teacher")));
 
                                 break;
                             case "Support":
                                 staff = new Support();
-                                ((Support)staff).Lab = Convert.ToString(QueryResult[8]);
+                                ((Support)staff).Lab = Convert.ToString(reader.GetValue(reader.GetOrdinal("Support")));
 
                                 break;
-                            case "Administrative":
+                            case "Admin":
                                 staff = new Administrative();
-                                ((Administrative)staff).Section = Convert.ToString(QueryResult[9]);
+                                ((Administrative)staff).Section = Convert.ToString(reader.GetValue(reader.GetOrdinal("Administrative"))); 
 
                                 break;
                         }
 
-                        staff.StaffID = Convert.ToInt32(QueryResult[0]);
-                        staff.Name = Convert.ToString(QueryResult[1]);
-                        Enum.TryParse(Convert.ToString(QueryResult[2]), out GenderType Gender);
+                        staff.StaffID = Convert.ToInt32((reader.GetValue(reader.GetOrdinal("StaffID"))));
+                        staff.Name = Convert.ToString(reader.GetValue(reader.GetOrdinal("StaffName")));
+                        Enum.TryParse(Convert.ToString(reader.GetValue(reader.GetOrdinal("Gender"))), out GenderType Gender);
                         staff.Gender = Gender;
-                        staff.Age = Convert.ToInt32(QueryResult[3]);
-                        staff.DailyWage = Convert.ToInt32(QueryResult[4]);
-                        staff.JobType = Convert.ToString(QueryResult[5]);
+                        staff.Age = Convert.ToInt32(reader.GetValue(reader.GetOrdinal("age")));
+                        staff.DailyWage = Convert.ToInt32(reader.GetValue(reader.GetOrdinal("Salary")));
+                        staff.JobType = Convert.ToString(reader.GetValue(reader.GetOrdinal("JobType")));
                         return staff;
                     }
                 }
@@ -205,7 +205,7 @@ namespace StaffDatabaseHelper
                 UpdateStaffCommand.Parameters.Add("@Gender", SqlDbType.Char, 1).Value = staff.Gender;
                 UpdateStaffCommand.Parameters.Add("@Salary", SqlDbType.Int).Value = staff.DailyWage;
                 UpdateStaffCommand.Parameters.Add("@JobType", SqlDbType.VarChar, 100).Value = staff.JobType;
-                UpdateStaffCommand.Parameters.Add("@StaffID", SqlDbType.Int).Value = staff.StaffID;
+                UpdateStaffCommand.Parameters.Add("@StaffID", SqlDbType.Int).Value = StaffID;
 
                 DataTable UDT_JobField = new DataTable();
                 UDT_JobField.Columns.Add("JobFieldId", typeof(int));
@@ -216,7 +216,7 @@ namespace StaffDatabaseHelper
                     case "Teacher":
                         Teaching newTeacher = (Teaching)staff;
                         UDT_JobField.Rows.Add(1, "Subject", newTeacher.Subject);
-                        if (newTeacher.ClassTeacher != "NA")
+                        if (newTeacher.ClassTeacher != "")
                         {
                             UDT_JobField.Rows.Add(2, "Class Teacher", newTeacher.ClassTeacher);
                         }
@@ -279,7 +279,7 @@ namespace StaffDatabaseHelper
                         staff.Gender = Gender;
                         staff.Age = Convert.ToInt32(reader.GetValue(reader.GetOrdinal("age")));
                         staff.DailyWage = Convert.ToInt32(reader.GetValue(reader.GetOrdinal("Salary")));
-                        staff.JobType = Convert.ToString(reader.GetValue(reader.GetOrdinal("StaffID")));
+                        staff.JobType = Convert.ToString(reader.GetValue(reader.GetOrdinal("JobType")));
                         staffList.Add(staff);
                     }
                     return staffList;
