@@ -14,19 +14,23 @@ namespace DataLibrary
         
         public void Serialize(List<IStaffOperation>_staffList, string path)
         {
-            var staffList=_staffList.Select(s => (Staff)s).ToList();
-            System.Xml.Serialization.XmlSerializer writer = new System.Xml.Serialization.XmlSerializer(typeof(List<Staff>));
-            var stream = new System.IO.StreamWriter(path);
-            writer.Serialize(stream, staffList);
-            stream.Close();
+            using (var stream = new System.IO.StreamWriter(path)) 
+            {
+                var staffList = _staffList.Select(s => (Staff)s).ToList();
+                System.Xml.Serialization.XmlSerializer writer = new System.Xml.Serialization.XmlSerializer(typeof(List<Staff>));
+                writer.Serialize(stream, staffList);
+                stream.Close();
+            }
         }
         public List<IStaffOperation> DeSerialize(string path)
         {
-            var reader = new System.Xml.Serialization.XmlSerializer(typeof(List<Staff>));
-            System.IO.StreamReader file = new System.IO.StreamReader(path);
-            List<Staff> deserializedStaffList = (List<Staff>)reader.Deserialize(file);
-            file.Close();
-            return deserializedStaffList.Select(s=>(IStaffOperation) s).ToList();
+            using (System.IO.StreamReader file = new System.IO.StreamReader(path))
+            {
+                var reader = new System.Xml.Serialization.XmlSerializer(typeof(List<Staff>));
+                List<Staff> deserializedStaffList = (List<Staff>)reader.Deserialize(file);
+                file.Close();
+                return deserializedStaffList.Select(s => (IStaffOperation)s).ToList();
+            }
         }
     }
 }

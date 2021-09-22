@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using StaffDatabaseHelper;
@@ -11,6 +12,7 @@ namespace StaffManagementAPI.Controllers
     
     [Route("api/Staff")]
     [ApiController]
+    [EnableCors("_myorigins")]
     public class StaffController : ControllerBase
     {
         private static IConfiguration configuration;
@@ -43,8 +45,7 @@ namespace StaffManagementAPI.Controllers
         [HttpPost]
         public object AddStaff([FromBody] Models.Staff staff)//post
         {
-            IStaffOperation _staff = null;
-            _staff = AssignStaffValuesInIStaffOperation(staff);
+            IStaffOperation _staff = AssignStaffValuesInIStaffOperation(staff);
             if(_staff == null)
             {
                 return BadRequest();
