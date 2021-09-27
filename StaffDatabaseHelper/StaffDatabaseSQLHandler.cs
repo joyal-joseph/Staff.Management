@@ -267,7 +267,7 @@ namespace StaffDatabaseHelper
                                 ((Support)staff).Lab = Convert.ToString(reader.GetValue(reader.GetOrdinal("Support")));
 
                                 break;
-                            case "Administrative":
+                            case "Admin":
                                 staff = new Administrative();
                                 ((Administrative)staff).Section = Convert.ToString(reader.GetValue(reader.GetOrdinal("Administrative")));
 
@@ -282,6 +282,7 @@ namespace StaffDatabaseHelper
                         staff.JobType = Convert.ToString(reader.GetValue(reader.GetOrdinal("JobType")));
                         staffList.Add(staff);
                     }
+
                     return staffList;
                 }
                 catch (Exception e)

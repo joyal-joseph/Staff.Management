@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using StaffDatabaseHelper;
 using StaffManagementConsole;
+
 
 namespace StaffManagementAPI.Controllers
 {
@@ -23,12 +25,14 @@ namespace StaffManagementAPI.Controllers
         [HttpGet]
         public object ViewAllStaff()
         {
-            List<IStaffOperation> staffList = DBHandler.ViewAllStaff();
+            List<IStaffOperation> staffList = DBHandler.ViewAllStaff().ToList();
+
+
             if (staffList == null)
             {
                 return StatusCode((int)HttpStatusCode.NotFound);
             }
-            return StatusCode((int)HttpStatusCode.OK, staffList);
+            return StatusCode((int)HttpStatusCode.OK, staffList.ConvertAll(ConvertToModelsStaff));
         }
 
         [HttpGet("{StaffID}")]
@@ -140,5 +144,30 @@ namespace StaffManagementAPI.Controllers
                 _staff.Gender = staff.Gender;
                 return _staff;
         }
+        private static Models.Staff ConvertToModelsStaff(IStaffOperation staff)
+        {
+            Models.Staff modelsStaff=new Models.Staff { StaffID=staff.StaffID, Name=staff.Name,
+                Age=staff.Age, DailyWage=staff.DailyWage, JobType=staff.JobType, Gender= staff.Gender };
+            switch (staff.JobType)
+            {
+                case "Teacher":
+
+                    modelsStaff.Subject=((Teaching)staff).Subject;
+                    modelsStaff.ClassTeacher= ((Teaching)staff).ClassTeacher;
+
+                    break;
+                case "Support":
+
+                    modelsStaff.Lab= ((Support)staff).Lab;
+
+                    break;
+                case "Admin":
+                    
+                    modelsStaff.Section=((Administrative)staff).Section;
+                    break;
+            }
+            return modelsStaff;
+        }
     }
+
 }

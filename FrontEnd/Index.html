@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" href="style.css">
+    <script src="Index.js"></script>
+</head>
+
+<body>
+    <div class="buttons">
+        <button class="dropbtn" onclick=AddFunction()>Add staff</button><br>
+        <div class="dropdown">
+            <button onclick="toggleFunction()" class="dropbtn" id="filterButton">All staff</button>
+            <div id="myDropdown" class="dropdown-content">
+                <a onclick="FilterByType('All staff')">All staff</a>
+                <a onclick="FilterByType('Teacher')">Teacher</a>
+                <a onclick="FilterByType('Admin')">Admin</a>
+                <a onclick="FilterByType('Support')">Support</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="popUpForm" id="popUpForm">
+        <span class="close" onclick="PopUpClose()">&times;</span>
+        <h2 id="AddOrUpdateHeading">Add</h2>
+
+        <form id="Dataform">
+            <div id="DataForm" class="modal">
+                <div class="DataFields">
+                    <input type="number" name="staffID" id="StaffID" hidden value=-1>
+
+                    <label for="Name">Name:</label>
+                    <input type="text" id="Name" name="name" value="Name" required><br>
+                    <label for="Age">Age:</label>
+                    <input type="number" id="Age" name="age" value="18" min="18" max="75" required><br>
+                    <label for="Gender">Gender:</label>
+                    <select id="Gender" name="gender" value="Gender">
+                        <option value="0">Male</option>
+                        <option value="1">Female</option>
+                        <option value="2">Others</option>
+                </select><br>
+                    <label for="DailyWage">DailyWage:</label>
+                    <input type="number" id="DailyWage" name="dailyWage" value="600" required><br>
+                    <label for="JobType">JobType:</label>
+
+                    <select id="JobType" name="jobType" value="None" onchange="JobField()">
+                        <option value="None">Select Jobtype</option>
+                        <option value="Teacher">Teacher</option>
+                        <option value="Support">Support</option>
+                        <option value="Admin">Admin</option>
+                </select><br>
+                    <div id="JobFieldInput">
+
+                    </div>
+
+
+                    <button type="submit" id="formButton"> Add/Update</button>
+
+                </div>
+
+            </div>
+        </form>
+    </div>
+    <h3>Staff Details </h3>
+
+    <table id="StaffTable">
+        <thead>
+            <tr>
+                <th onclick="SortFunction('staffID')">StaffID</th>
+                <th onclick="SortFunction('name')">Name</th>
+                <th onclick="SortFunction('age')">Age</th>
+                <th onclick="SortFunction('gender')">Gender</th>
+                <th onclick="SortFunction('dailyWage')">Dailywage</th>
+                <th onclick="SortFunction('jobType')">Jobtype</th>
+                <th onclick="SortFunction('subject')">Subject</th>
+                <th onclick="SortFunction('classTeacher')">Class Duty</th>
+                <th onclick="SortFunction('section')">Section</th>
+                <th onclick="SortFunction('lab')">Department</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+
+
+</body>
+
+</html>
