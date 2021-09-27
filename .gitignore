@@ -8,7 +8,7 @@ Joyal.StaffManagement.Core/bin/*
 Joyal.StaffManagement.Core/obj/*
 Joyal.StaffManagement.Core/.vs/*
 .editorconfig
-.vs/*
+.vs
 Joyal.StaffManagement.sln
 .editorconfig
 Joyal.StaffManagement.Console/bin/*
