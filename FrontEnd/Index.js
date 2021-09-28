@@ -190,7 +190,6 @@ async function staffFetch() {
     let data = await response.json();
     staffList = [...data];
     currentList = staffList;
-    //mainTable(currentList.slice(0, 10));
     currentPage = (Math.ceil(currentList.length / itemsPerPage) < currentPage) && currentPage != 1 ? currentPage - 1 : currentPage;
     paginationButtons(currentPage)
 }
@@ -216,7 +215,6 @@ async function mainTable(data) {
 
         var cell4 = row.insertCell(-1);
         cell4.innerHTML = Gender[data[i].gender];
-        /* gender need enum or equivalent*/
 
         var cell5 = row.insertCell(-1);
         cell5.innerHTML = data[i].dailyWage;
@@ -306,13 +304,12 @@ function paginationButtons(currentPage) {
         button.textContent = index;
         button.className = "pagination";
         button.id = index;
-        //button.value = index;
-        button.onclick = () => {
-                globalThis.currentPage = index;
-                mainTable(currentList.slice((index - 1) * itemsPerPage, (index) * itemsPerPage));
 
-            }
-            //button.setAttribute("click", mainTable(currentList.slice(20, 30)))
+        button.onclick = () => {
+            globalThis.currentPage = index;
+            mainTable(currentList.slice((index - 1) * itemsPerPage, (index) * itemsPerPage));
+
+        }
         pagerButtons.appendChild(button);
 
     }
@@ -330,4 +327,3 @@ function multipleDelete() {
     });
 }
 staffFetch();
-//paginationButtons(1);
