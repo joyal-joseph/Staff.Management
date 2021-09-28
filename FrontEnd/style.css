@@ -1,10 +1,14 @@
+body {
+    background-color: rgb(253, 253, 246);
+}
+
 .buttons {
     float: right;
     width: 100%;
     right: 0;
 }
 
-.dropbtn {
+.topbtn {
     background-color: #3498DB;
     color: white;
     padding: 16px;
@@ -12,40 +16,57 @@
     border: none;
     cursor: pointer;
     margin-bottom: 5px;
+    float: right;
+    margin-right: 5px;
 }
 
-.dropbtn:hover,
-.dropbtn:focus {
-    background-color: #2980B9;
+.topbtn:hover,
+.topbtn:focus {
+    background-color: #0c5a8f;
 }
 
 .dropdown {
     position: relative;
-    display: inline-block;
+    float: right;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
 }
 
 .dropdown-content {
     display: none;
+    float: right;
     position: absolute;
     background-color: #f1f1f1;
-    min-width: 160px;
+    min-width: 88px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
+    margin-top: 50px;
 }
 
-.dropdown-content a {
+.dropdown-content button {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
+    width: 100%;
+    color: rgb(255, 255, 255);
+    background-color: #63cdda;
 }
 
-.dropdown-content a:hover {
+.dropdown-content button:hover {
     background-color: #ddd
 }
 
 .show {
     display: block;
+}
+
+h2 {
+    text-align: center;
+    color: darkblue;
+    text-decoration: underline;
 }
 
 table,
@@ -70,29 +91,34 @@ td {
     justify-content: center;
     align-items: center;
     position: fixed;
-    width: 400px;
-    height: 300px;
-    margin-left: 30%;
+    width: 25vw;
+    height: 50vh;
+    margin-top: 8vh;
+    margin-left: 36%;
     margin-right: 50px;
-    background-color: darkcyan;
+    background-image: linear-gradient(to right, rgb(202, 40, 40), rgb(245, 120, 120));
     z-index: 1;
 }
 
+#formButton {
+    background-color: rgb(85, 55, 55);
+    margin-left: 90px;
+    width: 60px;
+    height: 30px;
+    color: white;
+}
+
 .close {
-    color: #aaa;
+    color: rgb(255, 255, 255);
     margin-left: auto;
     font-size: 28px;
     font-weight: bold;
+    margin-top: -40px;
 }
 
 .close:hover {
     cursor: pointer;
-    color: darkred;
-}
-
-.TableHeader:hover {
-    background-color: darkgrey;
-    cursor: pointer;
+    color: rgb(87, 10, 10);
 }
 
 
@@ -100,6 +126,9 @@ td {
 
 .pagination {
     display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .pagination button {
@@ -109,6 +138,8 @@ td {
     text-decoration: none;
     transition: background-color .3s;
     border: 1px solid #ddd;
+    margin-left: 0%;
+    background-color: rgb(245, 228, 181);
 }
 
 .pagination button.active {
@@ -119,4 +150,78 @@ td {
 
 .pagination button:hover:not(.active) {
     background-color: rgb(124, 124, 124);
+}
+
+
+/* table */
+
+#StaffTable {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 92%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#StaffTable td,
+#StaffTable th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#StaffTable tr:nth-child(even) {
+    background-color: #e1f5f8;
+}
+
+#StaffTable tr:nth-child(odd) {
+    background-color: #c9ecf5;
+}
+
+#StaffTable tr:hover {
+    background-color: skyblue;
+}
+
+#StaffTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: dodgerblue;
+    color: white;
+}
+
+#StaffTable th:hover {
+    background-color: darkblue;
+    cursor: pointer;
+}
+
+#DeleteButton {
+    background-color: rgb(245, 23, 23);
+    color: rgb(255, 255, 255);
+}
+
+label {
+    float: left;
+    width: 6em;
+    text-align: right;
+    padding-right: 0.5em;
+}
+
+#Dataform input,
+textarea {
+    text-align: left;
+    width: 180px;
+}
+
+select {
+    width: 188px;
+}
+
+input.submit {
+    margin-left: 6.5em;
+    width: auto;
+}
+
+label,
+input.submit {
+    font: normal 0.8em Verdana, Geneva, Arial, Helvetica, sans-serif;
 }

@@ -50,7 +50,7 @@ function add() {
     document.getElementById("DailyWage").value = null;
     document.getElementById("Gender").value = null;
     currentEditingData.jobType = null;
-    document.getElementById("JobType").value = null;
+    document.getElementById("JobType").value = "None";
     var FieldDivision = document.getElementById("JobFieldInput");
     FieldDivision.innerHTML = "";
     currentEditingData = null;
@@ -141,7 +141,7 @@ function toggle() {
 
 
 window.onclick = function(event) {
-    if (!event.target.matches('.dropbtn')) {
+    if (!event.target.matches('.topbtn')) {
         var dropdowns = document.getElementsByClassName("dropdown-content");
         var i;
         for (i = 0; i < dropdowns.length; i++) {
@@ -173,7 +173,8 @@ function filterByType(typeName) {
             filterByTypeSupport("Support");
             break;
     }
-    mainTable(currentList);
+    // mainTable(currentList);
+    paginationButtons(1);
 }
 
 function filterByTypeSupport(jobType) {
@@ -254,6 +255,7 @@ async function mainTable(data) {
 
         var btn = document.createElement("button");
         btn.onclick = () => deleteButton(data[i].staffID);
+        btn.id = "DeleteButton";
         btn.textContent = "Delete";
 
         var buttonCell = row.insertCell(-1);
@@ -266,6 +268,7 @@ async function mainTable(data) {
             deleteList.push(data[i].staffID)
         };
         var checkboxCell = row.insertCell(-1);
+        checkboxCell.id = "CheckBoxColumn";
         checkboxCell.appendChild(checkBox);
     }
 }
@@ -296,7 +299,7 @@ function paginationButtons(currentPage) {
 
     var button = document.createElement("button");
     button.innerHTML = "&laquo;";
-    button.className = "pagination";
+    button.className = "paginationButton";
     button.onclick = "mainTable(currentList)";
     pagerButtons.appendChild(button);
     for (let index = 1; index < Math.ceil(currentList.length / itemsPerPage) + 1; index++) {
@@ -306,13 +309,16 @@ function paginationButtons(currentPage) {
         button.id = index;
 
         button.onclick = () => {
+            this.document.getElementById(globalThis.currentPage).style.background = "";
             globalThis.currentPage = index;
             mainTable(currentList.slice((index - 1) * itemsPerPage, (index) * itemsPerPage));
-
+            document.getElementById(index).style.background = "red";
         }
         pagerButtons.appendChild(button);
 
+
     }
+    document.getElementById(currentPage).style.background = "red";
     console.log(Math.ceil(138 / 10));
     var button = document.createElement("button");
     button.innerHTML = "&raquo;";
@@ -326,4 +332,6 @@ function multipleDelete() {
         deleteButton(id);
     });
 }
+
+
 staffFetch();
