@@ -9,9 +9,10 @@ Joyal.StaffManagement.Core/obj/*
 Joyal.StaffManagement.Core/.vs/*
 .editorconfig
 .vs/*
+.vs
 Joyal.StaffManagement.sln
 .editorconfig
-Joyal.StaffManagement.Console/bin/*
+
 StaffDatabaseHelper/bin/*
 StaffDatabaseHelper/obj/*
 StaffManagement.Database/bin/*
