@@ -6,7 +6,7 @@
 
 <body>
     <div class="buttons">
-        <button class="topbtn" onclick=multipleDelete()>Delete</button>
+
         <button class="topbtn" onclick=add()>Add staff</button>
         <div class="dropdown">
             <button onclick="toggle()" class="topbtn" id="filterButton">All staff</button>
@@ -62,18 +62,20 @@
     <table id="StaffTable">
         <thead>
             <tr>
-                <th class="TableHeader" onclick="sortFunction('staffID')">StaffID</th>
-                <th class="TableHeader" onclick="sortFunction('name')">Name</th>
-                <th class="TableHeader" onclick="sortFunction('age')">Age</th>
-                <th class="TableHeader" onclick="sortFunction('gender')">Gender</th>
-                <th class="TableHeader" onclick="sortFunction('dailyWage')">Dailywage</th>
-                <th class="TableHeader" onclick="sortFunction('jobType')">Jobtype</th>
-                <th class="TableHeader" onclick="sortFunction('subject')">Subject</th>
-                <th class="TableHeader" onclick="sortFunction('classTeacher')">Class Duty</th>
-                <th class="TableHeader" onclick="sortFunction('section')">Section</th>
-                <th class="TableHeader" onclick="sortFunction('lab')">Department</th>
+                <th id="CheckBoxColumn"> <input type="checkbox" onclick="selectAllCheckBox()"></input>
+                </th>
+                <th class="TableHeaderUp" id="staffID" onclick="sortFunction('staffID')">StaffID&#9650</th>
+                <th class="TableHeader" id="name" onclick="sortFunction('name')">Name</th>
+                <th class="TableHeader" id="age" onclick="sortFunction('age')">Age</th>
+                <th class="TableHeader" id="gender" onclick="sortFunction('gender')">Gender</th>
+                <th class="TableHeader" id="dailyWage" onclick="sortFunction('dailyWage')">Dailywage</th>
+                <th class="TableHeader" id="jobType" onclick="sortFunction('jobType')">Jobtype</th>
+                <th class="TableHeader" id="subject" onclick="sortFunction('subject')">Subject</th>
+                <th class="TableHeader" id="classTeacher" onclick="sortFunction('classTeacher')">Class Duty</th>
+                <th class="TableHeader" id="section" onclick="sortFunction('section')">Section</th>
+                <th class="TableHeader" id="lab" onclick="sortFunction('lab')">Department</th>
                 <th></th>
-                <th id="CheckBoxColumn"></th>
+
             </tr>
         </thead>
         <tbody>
@@ -85,7 +87,7 @@
 
     </div>
 
-
+    <button class="topbtn" onclick=multipleDelete() style="float: left; margin-left: 55px; background-color: rgb(187, 26, 26); ">Delete</button>
 
 </body>
 <script src="Index.js"></script>

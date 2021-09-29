@@ -2,13 +2,38 @@ var staffList = [];
 var currentList = [...staffList];
 var itemsPerPage = 10;
 var currentPage = 1;
+var currentSortedColumn = "staffID";
 var deleteList = [];
 const Gender = ["Male", "Female", "Others"]
+var selectedAll = false;
 
 var currentEditingData = {};
 async function addCell(cellData) {
     var cell = row.insertCell(-1);
     cell.innerHTML = cellData;
+}
+
+function selectAllCheckBox() {
+
+    deleteList = [];
+    if (!document.getElementsByClassName("CheckBoxColumn")[0].checked) {
+        currentList.forEach(element => {
+            deleteList.push(element.staffID);
+        });
+        var AllSelectList = document.getElementsByClassName("CheckBoxColumn");
+        for (let index = 0; index < AllSelectList.length; index++) {
+            AllSelectList[index].checked = true;
+        }
+        selectedAll = true;
+    } else {
+        var AllSelectList = document.getElementsByClassName("CheckBoxColumn");
+        for (let index = 0; index < AllSelectList.length; index++) {
+            AllSelectList[index].checked = false;
+        }
+        selectedAll = false;
+    }
+
+
 }
 
 async function deleteButton(id) {
@@ -64,7 +89,7 @@ function submitHandler(e) {
     data.staffID = parseInt(data.staffID);
     data.age = parseInt(data.age);
     data.gender = parseInt(data.gender);
-    console.log(data);
+
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     var requestOptions = {
@@ -196,13 +221,27 @@ async function staffFetch() {
 }
 async function mainTable(data) {
     deleteList = [];
-    console.log(currentPage);
     var table = document.getElementById("StaffTable");
     var tableBody = table.getElementsByTagName("tbody")[0];
     tableBody.innerHTML = "";
     for (let i = 0; i < data.length; i++) {
         var row = tableBody.insertRow(-1);
         row.onclick = () => update(data[i]);
+
+        var checkBox = document.createElement("input");
+        checkBox.type = "checkbox";
+        if (selectedAll) {
+            checkBox.checked = true;
+        }
+
+        checkBox.onclick = () => {
+            event.stopPropagation();
+            deleteList.push(data[i].staffID)
+        };
+        var checkboxCell = row.insertCell(-1);
+        checkboxCell.id = "CheckBoxColumn";
+        checkBox.className = "CheckBoxColumn";
+        checkboxCell.appendChild(checkBox);
 
         var cell1 = row.insertCell(-1);
         cell1.innerHTML = data[i].staffID;
@@ -261,19 +300,16 @@ async function mainTable(data) {
         var buttonCell = row.insertCell(-1);
         buttonCell.appendChild(btn);
 
-        var checkBox = document.createElement("input");
-        checkBox.type = "checkbox";
-        checkBox.onclick = () => {
-            event.stopPropagation();
-            deleteList.push(data[i].staffID)
-        };
-        var checkboxCell = row.insertCell(-1);
-        checkboxCell.id = "CheckBoxColumn";
-        checkboxCell.appendChild(checkBox);
+
     }
 }
 
 function sortFunction(columnName) {
+    var tableHead = document.getElementById(currentSortedColumn).innerHTML;
+    document.getElementById(currentSortedColumn).innerHTML = tableHead.slice(0, -1);
+    currentSortedColumn = columnName;
+    document.getElementById(currentSortedColumn).innerHTML += "&#9650";
+
     function getSortOrder(columnName) {
         return function(a, b) {
             if (a[columnName] > b[columnName]) {
@@ -287,12 +323,9 @@ function sortFunction(columnName) {
 
     currentList.sort(getSortOrder(columnName));
     paginationButtons(currentPage)
-    console.log(staffList.length);
-    console.log(currentList.length);
 }
 
 function paginationButtons(currentPage) {
-    console.log(currentPage);
     mainTable(currentList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage));
     var pagerButtons = document.getElementById("pagination");
     pagerButtons.innerHTML = "";
@@ -319,7 +352,6 @@ function paginationButtons(currentPage) {
 
     }
     document.getElementById(currentPage).style.background = "red";
-    console.log(Math.ceil(138 / 10));
     var button = document.createElement("button");
     button.innerHTML = "&raquo;";
     button.className = "pagination";

@@ -225,3 +225,13 @@ label,
 input.submit {
     font: normal 0.8em Verdana, Geneva, Arial, Helvetica, sans-serif;
 }
+
+
+/*
+.TableHeaderUp {
+    content: ' ';
+    position: relative;
+    border: 8px solid transparent;
+    border-bottom-color: silver;
+}
+*/
