@@ -19,6 +19,9 @@ StaffManagement.Database/obj/*
 StaffManagementAPI/.config/*
 StaffManagementAPI/bin/*
 StaffManagementAPI/obj/*
+FrontEnd\Angular\my-app
+FrontEnd\Angular\ts-hello
+
 
 
 
