@@ -4,6 +4,7 @@ import { StaffComponent } from './staff/staff.component';
 import { TeacherComponent } from './staff/teacher/teacher.component';
 import { AdminComponent } from './staff/admin/admin.component';
 import { SupportComponent } from './staff/support/support.component';
+import { PaginationComponent } from './pagination/pagination.component';
 
 
 
@@ -12,7 +13,8 @@ import { SupportComponent } from './staff/support/support.component';
     StaffComponent,
     TeacherComponent,
     AdminComponent,
-    SupportComponent
+    SupportComponent,
+    PaginationComponent
   ],
   imports: [
     CommonModule

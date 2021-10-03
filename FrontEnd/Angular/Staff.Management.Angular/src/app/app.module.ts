@@ -1,3 +1,5 @@
+import { PaginationComponent } from './components/pagination/pagination.component';
+import { NavigationComponent } from './components/main-page/navigation/navigation.component';
 import { StaffService } from './components/staff/staff.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -12,7 +14,8 @@ import { HttpClientModule } from '@angular/common/http';
   declarations: [
     AppComponent,
     StaffComponent,
-    
+    NavigationComponent,
+    PaginationComponent   
   ],
   imports: [
     BrowserModule,
