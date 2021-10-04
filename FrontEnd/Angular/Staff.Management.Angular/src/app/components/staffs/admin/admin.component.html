@@ -1,0 +1,22 @@
+<p>admin works!</p>
+<table class="staffs">
+    <th>StaffID</th>
+    <th>Name</th>
+    <th>Age</th>
+    <th>Salary</th>
+    <th>JobType</th>
+    <th>Gender</th>
+    <th>Section</th>
+    <tbody>
+        <tr *ngFor="let staff of staffs.slice(paginationStartIndex,paginationEndIndex)">
+            <td>{{staff.staffID}}</td>
+            <td>{{staff.name}}</td>
+            <td>{{staff.age}}</td>
+            <td>{{staff.dailyWage}}</td>
+            <td>{{staff.jobType}}</td>
+            <td>{{staff.gender}}</td>
+            <td>{{staff.section}}</td>
+        </tr>
+    </tbody>
+</table>
+<app-pagination (startAndEndIndeces)="StaffPrinting($event)" title="Pagination for admin" [numberOfStaffs]=staffs.length></app-pagination>
