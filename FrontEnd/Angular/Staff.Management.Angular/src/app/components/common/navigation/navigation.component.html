@@ -1,0 +1,10 @@
+<div class="topnav">
+    <a routerLinkActive="active current" routerLink="AllStaff">All Staff</a>
+    <a routerLinkActive="active current" routerLink="/Teacher">Teacher</a>
+    <a routerLinkActive="active current" routerLink="/Support">Support</a>
+    <a routerLinkActive="active current" routerLink="/Admin">Admin</a>
+    <button id="AddButton" (click)="AddStaff()">Add Staff</button>
+</div>
+<ng-container *ngIf=isAddForm>
+    <app-update-form [staff]=null [isAddForm]=true (activePopUpForm)="ActivePopUpFormChange($event)" (staffs)="DataAfterAdd($event)"></app-update-form>
+</ng-container>

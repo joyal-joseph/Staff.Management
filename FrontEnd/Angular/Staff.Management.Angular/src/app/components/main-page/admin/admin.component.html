@@ -1,0 +1,39 @@
+<h3 style="text-align: center;">
+    List of Admin</h3>
+<button id="deleteMultiple" (click)="DeleteStaffs()">Delete</button>
+<table class="staffs">
+    <th id="CheckBoxColumn"> <input type="checkbox" (click)="selectAllCheckBox()">
+    </th>
+    <th>StaffID</th>
+    <th>Name</th>
+    <th>Age</th>
+    <th>Salary</th>
+    <th>JobType</th>
+    <th>Gender</th>
+    <th>Section</th>
+    <th></th>
+    <th></th>
+    <tbody>
+        <tr *ngFor="let staff of staffs.slice(paginationStartIndex,paginationEndIndex)">
+            <td><input id="checkBoxRow" class="checkBoxRow" type="checkbox" value={{staff.staffID}}>
+            </td>
+            <td>{{staff.staffID}}</td>
+            <td>{{staff.name}}</td>
+            <td>{{staff.age}}</td>
+            <td>{{staff.dailyWage}}</td>
+            <td>{{staff.jobType}}</td>
+            <td>{{staff.gender}}</td>
+            <td>{{staff.section}}</td>
+            <td align='center'>
+                <button (click)="DeleteAStaff(staff.staffID)" class="deleteAStaff">Delete</button>
+            </td>
+            <td align='center'>
+                <button (click)="UpdateStaff(staff)" class="updateStaff">Update</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<app-pagination (startAndEndIndeces)="StaffPrinting($event) " title="Pagination for All staffs " [numberOfStaffs]=staffs.length></app-pagination>
+<ng-container *ngIf=activePopUpForm>
+    <app-update-form [staff]=updatingStaff (activePopUpForm)="ActivePopUpFormChange($event)" (staffs)="DataAfterUpdate($event)"></app-update-form>
+</ng-container>
