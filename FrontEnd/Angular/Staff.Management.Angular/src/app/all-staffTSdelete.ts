@@ -1,34 +1,37 @@
-import { Component, OnInit } from '@angular/core';
-import { Gender, StaffService } from '../../../services/all-staffs.service';
+
+import { NgIf } from '@angular/common';
+import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { Component, OnInit, Output,EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs';
+import { StaffService } from '../../../services/all-staffs.service';
+
+
 
 @Component({
-  selector: 'app-admin',
-  templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.css']
+  selector: 'app-all-staffs',
+  templateUrl: './all-staffs.component.html',
+  styleUrls: ['./all-staffs.component.css']
 })
-export class AdminComponent implements OnInit {
+export class AllStaffsComponent implements OnInit {
 
+  
+  staffs:any[]=[];
   allChecked=false;
   activePopUpForm=false;
   isAddForm=false;
-  title="List of Admins";
+  title="List of all staffs";
   paginationStartIndex:number=0;
   paginationEndIndex: number=9; 
-  staffs:any[]=[];
+  
   deleteList: number[]=[];
   debugElement:string="XYZ";
   RouterModule: any;
   updatingStaff: any;
-  constructor(private service: StaffService) { 
+  constructor(private service: StaffService ) { 
     service.GetStaffs().subscribe((response)=>{
-    
-    (response as any[]).forEach(element => {
-      if(element.jobType=="Admin"){
-        this.staffs.push(element);
-      }
-    });
-  });
+    this.staffs=response as any });
   }
+  
 
   ngOnInit(): void {
   }
@@ -44,7 +47,8 @@ export class AdminComponent implements OnInit {
     });  
     
   }
-  selectAllCheckBox(){
+
+selectAllCheckBox(){
 
     if(!this.allChecked){
       this.deleteList=[];
@@ -125,8 +129,4 @@ SortByName(){
 SortByID(){
   this.staffs.sort((a, b) => (a.staffID < b.staffID ? -1 : 1));
 }
-GenderFunction(gender: number){
-  return Gender[gender];
-}
-
 }

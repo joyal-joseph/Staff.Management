@@ -1,42 +1,4 @@
-/* .popUpForm {
-    padding: 20px;
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    width: 25vw;
-    height: 50vh;
-    margin-top: 8vh;
-    margin-left: 36%;
-    margin-right: 50px;
-    background-image: linear-gradient(to right, rgb(202, 40, 40), rgb(245, 120, 120));
-    z-index: 1;
-}
-
-#formButton {
-    background-color: rgb(85, 55, 55);
-    margin-left: 90px;
-    width: 60px;
-    height: 30px;
-    color: white;
-}
-
-.close {
-    color: rgb(255, 255, 255);
-    margin-left: auto;
-    font-size: 28px;
-    font-weight: bold;
-    margin-top: -40px;
-}
-
-.close:hover {
-    cursor: pointer;
-    color: rgb(87, 10, 10);
-} */
-
 .popUpForm {
-    /* background-color: rgb(245, 122, 133); */
     background-image: linear-gradient(to right, rgb(0, 255, 191), rgb(125, 225, 238));
     position: absolute;
     top: 123px;
@@ -49,7 +11,7 @@
 }
 
 #UpdateHeading {
-    margin-left: 170px;
+    text-align: center;
 }
 
 label {
@@ -92,4 +54,17 @@ input.submit {
 
 #DataForm {
     margin-left: 65px;
+}
+
+.close {
+    color: brown;
+    float: right;
+    margin-right: 20px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+form {
+    display: inline-block;
+    margin-left: 4vw;
 }

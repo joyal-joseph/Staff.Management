@@ -18,9 +18,10 @@
     background-color: #ddd;
 }
 
-.staffs th:hover {
+#Sortable:hover {
     background-color: rgb(99, 174, 243);
     color: black;
+    cursor: pointer;
 }
 
 .staffs th {

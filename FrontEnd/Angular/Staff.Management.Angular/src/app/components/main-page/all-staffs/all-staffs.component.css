@@ -19,8 +19,9 @@
     background-color: #f2f2f2;
 }
 
-.staffs tr:hover {
+#Sortable:hover {
     background-color: #ddd;
+    cursor: pointer;
 }
 
 .staffs th {

@@ -1,26 +1,31 @@
 <div class="popUpForm" id="popUpForm">
     <span class="close" (click)="popUpClose()">&times;</span>
+
     <h2 *ngIf="staff !== undefined && staff !== null" id="UpdateHeading">Update</h2>
     <h2 *ngIf="isAddForm" id="UpdateHeading">Add</h2>
-    <form id="Dataform" #Dataform="ngForm">
+    <form *ngIf="!isAddForm" id="Dataform" #Dataform="ngForm">
         <div id=" DataForm" class="modal">
             <div class="DataFields">
-                <input type="number" name="staffID" id="StaffID" hidden [(ngModel)]="staff.staffID">
-                <label for="Name">Name: </label>
-                <input type="text" id="Name" name="name" [(ngModel)]="staff.name" required><br>
-                <label for="Age"> Age:</label>
-                <input type="number" id="Age" name="age" [(ngModel)]="staff.age" min="18" max="75" required><br>
-                <label for="Gender">Gender:</label>
-                <select id="Gender" name="gender" [(ngModel)]="staff.gender">
+
+
+
+                <div *ngIf="!isAddForm">
+                    <input type="number" name="staffID" id="StaffID" hidden [(ngModel)]="staff.staffID">
+                    <label for="Name">Name: </label>
+                    <input type="text" id="Name" name="name" [(ngModel)]="staff.name" required><br>
+                    <label for="Age"> Age:</label>
+                    <input type="number" id="Age" name="age" [(ngModel)]="staff.age" min="18" max="75" required><br>
+                    <label for="Gender">Gender:</label>
+                    <select id="Gender" name="gender" [(ngModel)]="staff.gender">
                     <option value="0">Male</option>
                     <option value="1">Female</option>
                     <option value="2">Others</option>
             </select><br>
-                <label for="DailyWage">DailyWage:</label>
-                <input type="number" id="DailyWage" name="dailyWage" [(ngModel)]="staff.dailyWage" required><br>
-                <label for="JobType">JobType:</label>
+                    <label for="DailyWage">DailyWage:</label>
+                    <input type="number" id="DailyWage" name="dailyWage" [(ngModel)]="staff.dailyWage" required><br>
+                    <label for="JobType">JobType:</label>
 
-                <select id="JobType" name="jobType" [(ngModel)]="staff.jobType">
+                    <select id="JobType" name="jobType" [(ngModel)]="staff.jobType">
                     <option value="None">Select</option>
                     <option value="Teacher">Teacher</option>
                     <option value="Support">Support</option>
@@ -28,29 +33,78 @@
             </select><br>
 
 
-                <div id="JobFieldInput">
-                    <label *ngIf="staff.jobType=='Teacher'" for="Subject">Subject: </label>
-                    <input *ngIf="staff.jobType=='Teacher'" type="text" id="Subject" name="Subject" [(ngModel)]="staff.subject" required><br *ngIf="staff.jobType=='Teacher'">
-                    <label *ngIf="staff.jobType=='Teacher'" for="ClassTeacher">ClassDuty: </label>
-                    <input *ngIf="staff.jobType=='Teacher'" type="text" id="ClassTeacher" name="ClassTeacher" [(ngModel)]="staff.classTeacher">
+                    <div id="JobFieldInput">
+                        <label *ngIf="staff.jobType=='Teacher'" for="Subject">Subject: </label>
+                        <input *ngIf="staff.jobType=='Teacher'" type="text" id="Subject" name="Subject" [(ngModel)]="staff.subject" required><br *ngIf="staff.jobType=='Teacher'">
+                        <label *ngIf="staff.jobType=='Teacher'" for="ClassTeacher">ClassDuty: </label>
+                        <input *ngIf="staff.jobType=='Teacher'" type="text" id="ClassTeacher" name="ClassTeacher" [(ngModel)]="staff.classTeacher">
 
-                    <label *ngIf="staff.jobType=='Support'" for="Lab ">Lab: </label>
-                    <input *ngIf="staff.jobType=='Support'" type="text " id="Lab" name="Lab" [(ngModel)]="staff.lab" required>
+                        <label *ngIf="staff.jobType=='Support'" for="Lab ">Lab: </label>
+                        <input *ngIf="staff.jobType=='Support'" type="text " id="Lab" name="Lab" [(ngModel)]="staff.lab" required>
 
-                    <label *ngIf="staff.jobType=='Admin'" for="Section">Section: </label>
-                    <input *ngIf="staff.jobType=='Admin'" type="text" id="Section " name="Section" [(ngModel)]="staff.section" required>
+                        <label *ngIf="staff.jobType=='Admin'" for="Section">Section: </label>
+                        <input *ngIf="staff.jobType=='Admin'" type="text" id="Section " name="Section" [(ngModel)]="staff.section" required>
+                        <br>
+                    </div>
                     <br>
+
+                    <button *ngIf="staff !== undefined && staff !== null" id="UpdateHeading" type="button" id="formButton" (click)="UpdateStaff()">Update</button>
                 </div>
-                <br>
-                <div *ngIf="staff.staffID !== undefined || staff.staffID !== null; then update else add"></div>
-                <ng-template #update>
-                    <button id="UpdateHeading" type="button" id="formButton" (click)="UpdateStaff()">Update</button>
-                </ng-template>
-                <ng-template #add>
-                    <button type="button" id="formButton" (click)="UpdateStaff()"> Add</button>
-                </ng-template>
 
             </div>
         </div>
     </form>
+
+    <form id="Dataform" *ngIf="isAddForm">
+        <div id=" DataForm" class="modal">
+            <div class="DataFields">
+
+                <div>
+
+                    <label for="Name">Name: </label>
+                    <input type="text" id="Name" name="name" [(ngModel)]="_staff.name" required><br>
+                    <label for="Age"> Age:</label>
+                    <input type="number" id="Age" name="age" min="18" max="75" [(ngModel)]="_staff.age" required><br>
+                    <label for="Gender">Gender:</label>
+                    <select id="Gender" name="gender" [(ngModel)]="_staff.gender">
+                        <option value=0>Male</option>
+                        <option value=1>Female</option>
+                        <option value=2>Others</option>
+                    </select><br>
+                    <label for="DailyWage">DailyWage:</label>
+                    <input type="number" id="DailyWage" name="dailyWage" [(ngModel)]="_staff.dailyWage" required><br>
+                    <label for="JobType">JobType:</label>
+
+                    <select id="JobType" name="jobType" [(ngModel)]="_staff.jobType">
+                        <option value="None">Select</option>
+                        <option value="Teacher">Teacher</option>
+                        <option value="Support">Support</option>
+                        <option value="Admin">Admin</option>
+                    </select><br>
+
+
+                    <div id="JobFieldInput">
+                        <label *ngIf="_staff.jobType=='Teacher'" for="Subject">Subject: </label>
+                        <input *ngIf="_staff.jobType=='Teacher'" type="text" id="Subject" name="Subject" [(ngModel)]="_staff.subject" required><br *ngIf="jobType=='Teacher'">
+                        <label *ngIf="_staff.jobType=='Teacher'" for="ClassTeacher">ClassDuty: </label>
+                        <input *ngIf="_staff.jobType=='Teacher'" type="text" id="ClassTeacher" [(ngModel)]="_staff.classTeacher" name="ClassTeacher">
+
+                        <label *ngIf="_staff.jobType=='Support'" for="Lab ">Lab: </label>
+                        <input *ngIf="_staff.jobType=='Support'" type="text " id="Lab" name="Lab" [(ngModel)]="_staff.lab" required>
+
+                        <label *ngIf="_staff.jobType=='Admin'" for="Section">Section: </label>
+                        <input *ngIf="_staff.jobType=='Admin'" type="text" id="Section " name="Section" [(ngModel)]="_staff.section" required>
+                        <br>
+                    </div>
+                    <br>
+                    <button *ngIf="isAddForm" type="button" id="formButton" (click)="AddStaff()"> Save</button>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+
+
+
 </div>

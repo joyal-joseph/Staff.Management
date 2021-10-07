@@ -11,6 +11,7 @@ export class NavigationComponent implements OnInit {
   @Input() deleteList:any;
   isAddForm=false;
   activePopUpForm=false;
+  staff:any=null;
   constructor(private service : StaffService) { }
 
   ngOnInit(): void {

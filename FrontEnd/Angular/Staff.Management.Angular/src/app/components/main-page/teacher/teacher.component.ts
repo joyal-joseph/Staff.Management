@@ -1,6 +1,6 @@
 import { PaginationComponent } from '../../common/pagination/pagination.component';
 import { Component, OnInit } from '@angular/core';
-import { StaffService } from '../../../services/all-staffs.service';
+import { Gender, StaffService } from '../../../services/all-staffs.service';
 
 @Component({
   selector: 'app-teacher',
@@ -9,6 +9,7 @@ import { StaffService } from '../../../services/all-staffs.service';
 })
 export class TeacherComponent implements OnInit {
 
+  
   allChecked=false;
   activePopUpForm=false;
   isAddForm=false;
@@ -122,4 +123,13 @@ DeleteStaffs(){
    });
 }
 
+SortByName(){
+  this.staffs.sort((a, b) => (a.name < b.name ? -1 : 1));
+}
+SortByID(){
+  this.staffs.sort((a, b) => (a.staffID < b.staffID ? -1 : 1));
+}
+GenderFunction(gender: number){
+  return Gender[gender];
+}
 }

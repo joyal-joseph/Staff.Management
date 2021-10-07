@@ -3,8 +3,8 @@
 <table class="staffs">
     <th id="CheckBoxColumn"> <input type="checkbox" (click)="selectAllCheckBox()">
     </th>
-    <th>StaffID</th>
-    <th>Name</th>
+    <th id="Sortable" (click)="SortByID()">StaffID</th>
+    <th id="Sortable" (click)="SortByName()">Name</th>
     <th>Age</th>
     <th>Salary</th>
     <th>JobType</th>
@@ -20,7 +20,7 @@
             <td>{{staff.age}}</td>
             <td>{{staff.dailyWage}}</td>
             <td>{{staff.jobType}}</td>
-            <td>{{staff.gender}}</td>
+            <td>{{GenderFunction(staff.gender)}}</td>
             <td>{{staff.lab}}</td>
             <td align='center'>
                 <button (click)="DeleteAStaff(staff.staffID)" class="deleteAStaff">Delete</button>

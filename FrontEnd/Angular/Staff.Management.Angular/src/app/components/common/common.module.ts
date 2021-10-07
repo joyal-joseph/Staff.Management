@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { PaginationComponent } from './pagination/pagination.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { FormsModule } from '@angular/forms';
@@ -15,7 +16,8 @@ import { UpdateFormComponent } from './update-form/update-form.component';
   ],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    RouterModule
     
   ],
   exports:[

@@ -1,8 +1,10 @@
 
 import { NgIf } from '@angular/common';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { isDelegatedFactoryMetadata } from '@angular/compiler/src/render3/r3_factory';
 import { Component, OnInit, Output,EventEmitter } from '@angular/core';
-import { StaffService } from '../../../services/all-staffs.service';
+import { from, Observable, of } from 'rxjs';
+import { StaffService, Gender } from '../../../services/all-staffs.service';
 
 
 
@@ -11,15 +13,22 @@ import { StaffService } from '../../../services/all-staffs.service';
   templateUrl: './all-staffs.component.html',
   styleUrls: ['./all-staffs.component.css']
 })
+
+
 export class AllStaffsComponent implements OnInit {
 
+  
+
+  
+  staffs:any[]=[];
+  //const myObservable = of(this.staffs);
   allChecked=false;
   activePopUpForm=false;
   isAddForm=false;
   title="List of all staffs";
   paginationStartIndex:number=0;
   paginationEndIndex: number=9; 
-  staffs:any[]=[];
+  
   deleteList: number[]=[];
   debugElement:string="XYZ";
   RouterModule: any;
@@ -27,10 +36,14 @@ export class AllStaffsComponent implements OnInit {
   constructor(private service: StaffService ) { 
     service.GetStaffs().subscribe((response)=>{
     this.staffs=response as any });
+
+    
+    const myObservable = of(this.staffs);
   }
   
 
   ngOnInit(): void {
+    
   }
   StaffPrinting(event : any){
     this.paginationStartIndex=event.startIndex;
@@ -120,4 +133,13 @@ DeleteStaffs(){
    });
 }
 
+SortByName(){
+  this.staffs.sort((a, b) => (a.name < b.name ? -1 : 1));
+}
+SortByID(){
+  this.staffs.sort((a, b) => (a.staffID < b.staffID ? -1 : 1));
+}
+GenderFunction(gender: number){
+  return Gender[gender];
+}
 }
