@@ -19,7 +19,6 @@ export class AllStaffsComponent implements OnInit {
 
   
 
-  
   staffs:any[]=[];
   //const myObservable = of(this.staffs);
   allChecked=false;
@@ -32,30 +31,28 @@ export class AllStaffsComponent implements OnInit {
   deleteList: number[]=[];
   debugElement:string="XYZ";
   RouterModule: any;
-  updatingStaff: any;
+  updatingStaffID: any;
   constructor(private service: StaffService ) { 
-    service.GetStaffs().subscribe((response)=>{
-    this.staffs=response as any });
-
-    
-    const myObservable = of(this.staffs);
+   
   }
   
 
   ngOnInit(): void {
-    
+    this.service.GetStaffs().subscribe((response)=>{
+      this.staffs=response as any;  
+    });
+
   }
   StaffPrinting(event : any){
     this.paginationStartIndex=event.startIndex;
     this.paginationEndIndex=event.endIndex;
   }
   DeleteAStaff(StaffID: number){
-    this.service.DeleteStaff(StaffID).subscribe(()=>{
-      this.service.GetStaffs().subscribe((response)=>{
-        this.staffs=response as any;
-      })
-    });  
     
+    this.service.DeleteStaff(StaffID).subscribe(()=>{
+      this.staffs.splice(this.staffs.findIndex(eachStaff => eachStaff.staffID==StaffID)  ,1)
+    }); 
+      
   }
 
 selectAllCheckBox(){
@@ -93,13 +90,13 @@ newStaffs(staffs:any){
   console.log(staffs)
 }
 
-UpdateStaff(staff: object){
-  this.service.UpdateStaff(staff).subscribe(()=>{
-    this.service.GetStaffs().subscribe((response)=>{
-      this.staffs=response as any;
-    })
-  })
-  this.updatingStaff=staff;
+UpdateStaff(staffID: number){
+  // this.service.UpdateStaff(staff).subscribe(()=>{
+  //   this.service.GetStaffs().subscribe((response)=>{
+  //     this.staffs=response as any;
+  //   })
+  // });
+  this.updatingStaffID=staffID;
   this.activePopUpForm=true;
   this.isAddForm=false;
 }
@@ -125,12 +122,10 @@ DeleteStaffs(){
     
   this.deleteList.forEach(async (staffID: number) => {
    await this.service.DeleteStaff(staffID).subscribe((response) =>{
-    console.log(staffID);
+    this.staffs.splice(this.staffs.findIndex(eachStaff => eachStaff.staffID==staffID)  ,1);
    })
-  })
-   this.service.GetStaffs().subscribe((response) =>{
-      this.staffs=response as any;
-   });
+  });
+
 }
 
 SortByName(){

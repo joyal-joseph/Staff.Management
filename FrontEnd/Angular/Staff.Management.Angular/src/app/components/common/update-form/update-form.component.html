@@ -10,7 +10,7 @@
 
 
                 <div *ngIf="!isAddForm">
-                    <input type="number" name="staffID" id="StaffID" hidden [(ngModel)]="staff.staffID">
+                    <!-- <input type="number" name="staffID" id="StaffID" hidden [value]="staff.staffID"> -->
                     <label for="Name">Name: </label>
                     <input type="text" id="Name" name="name" [(ngModel)]="staff.name" required><br>
                     <label for="Age"> Age:</label>
@@ -85,7 +85,7 @@
 
                     <div id="JobFieldInput">
                         <label *ngIf="_staff.jobType=='Teacher'" for="Subject">Subject: </label>
-                        <input *ngIf="_staff.jobType=='Teacher'" type="text" id="Subject" name="Subject" [(ngModel)]="_staff.subject" required><br *ngIf="jobType=='Teacher'">
+                        <input *ngIf="_staff.jobType=='Teacher'" type="text" id="Subject" name="Subject" [(ngModel)]="_staff.subject" required><br *ngIf="_staff.jobType=='Teacher'">
                         <label *ngIf="_staff.jobType=='Teacher'" for="ClassTeacher">ClassDuty: </label>
                         <input *ngIf="_staff.jobType=='Teacher'" type="text" id="ClassTeacher" [(ngModel)]="_staff.classTeacher" name="ClassTeacher">
 

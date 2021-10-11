@@ -1,0 +1,25 @@
+.ConfirmationBox {
+    width: 35vw;
+    height: 30vh;
+    position: absolute;
+    margin-left: 40vw;
+    margin-top: 20vh;
+    background-color: rgb(230, 223, 187);
+    text-align: center;
+    color: red;
+    padding-top: 25px;
+}
+
+#Yes,
+#No {
+    background-color: brown;
+    color: white;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+}
+
+#No {
+    margin-left: 10px;
+}

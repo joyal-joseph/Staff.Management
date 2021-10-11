@@ -1,10 +1,8 @@
-<h3 style="text-align: center;">
-
-    List of All Staff</h3>
+<h3 style="text-align: center;">List of All Staffs</h3>
 <!-- <button id="AddButton" (click)="AddStaff()">Add Staff</button> -->
 <button id="deleteMultiple" (click)="DeleteStaffs()">Delete</button>
 
-<!-- title in staff.component,ts -->
+
 <div>
     <table class="staffs">
         <th id="CheckBoxColumn"> <input type="checkbox" (click)="selectAllCheckBox()">
@@ -24,7 +22,7 @@
         <tbody>
             <tr *ngFor="let staff of staffs.slice(paginationStartIndex,paginationEndIndex)">
                 <td>
-                    <input id="checkBoxRow" class="checkBoxRow" type="checkbox" value={{staff.staffID}} (click)="selectACheckBox(staff.staffID)">
+                    <input id="checkBoxRow" class="checkBoxRow" type="checkbox" [checked]="allChecked" value={{staff.staffID}} (click)="selectACheckBox(staff.staffID)">
                 </td>
                 <td>{{staff.staffID}}</td>
                 <td>{{staff.name}}</td>
@@ -40,7 +38,7 @@
                     <button (click)="DeleteAStaff(staff.staffID)" class="deleteAStaff">Delete</button>
                 </td>
                 <td align='center'>
-                    <button (click)="UpdateStaff(staff)" class="updateStaff">Update</button>
+                    <button (click)="UpdateStaff(staff.staffID)" class="updateStaff">Update</button>
                 </td>
             </tr>
         </tbody>
@@ -50,5 +48,5 @@
 
 <app-pagination (startAndEndIndeces)="StaffPrinting($event) " title="Pagination for All staffs " [numberOfStaffs]=staffs.length></app-pagination>
 <ng-container *ngIf=activePopUpForm>
-    <app-update-form [staff]=updatingStaff (activePopUpForm)="ActivePopUpFormChange($event)" (staffs)="DataAfterUpdate($event)"></app-update-form>
+    <app-update-form [staffID]=updatingStaffID [staffsList]=staffs (activePopUpForm)="ActivePopUpFormChange($event)" (staffs)="DataAfterUpdate($event)"></app-update-form>
 </ng-container>

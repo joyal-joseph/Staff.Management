@@ -19,7 +19,7 @@ export class SupportComponent implements OnInit {
   deleteList: number[]=[];
   debugElement:string="XYZ";
   RouterModule: any;
-  updatingStaff: any;
+  updatingStaffID: any ;
   constructor(private service: StaffService) { 
     service.GetStaffs().subscribe((response)=>{
     
@@ -39,10 +39,9 @@ export class SupportComponent implements OnInit {
   }
   DeleteAStaff(StaffID: number){
     this.service.DeleteStaff(StaffID).subscribe(()=>{
-      this.service.GetStaffs().subscribe((response)=>{
-        this.staffs=response as any;
-      })
-    });  
+      this.staffs.splice(this.staffs.findIndex(eachStaff => eachStaff.staffID==StaffID)  ,1)
+    }); 
+      
     
   }
   
@@ -81,13 +80,13 @@ newStaffs(staffs:any){
   console.log(staffs)
 }
 
-UpdateStaff(staff: object){
-  this.service.UpdateStaff(staff).subscribe(()=>{
-    this.service.GetStaffs().subscribe((response)=>{
-      this.staffs=response as any;
-    })
-  })
-  this.updatingStaff=staff;
+UpdateStaff(staffID: number){
+  // this.service.UpdateStaff(staff).subscribe(()=>{
+  //   this.service.GetStaffs().subscribe((response)=>{
+  //     this.staffs=response as any;
+  //   })
+  // })
+  this.updatingStaffID=staffID;
   this.activePopUpForm=true;
   this.isAddForm=false;
 }
@@ -107,17 +106,15 @@ ActivePopUpFormChange(event: any){
 }
 DataAfterUpdate(event: any){
   this.staffs=event;
+  console.log(event);
 }
 
 DeleteStaffs(){
     
   this.deleteList.forEach(async (staffID: number) => {
-   await this.service.DeleteStaff(staffID).subscribe((response) =>{
-    console.log(staffID);
-   })
-  })
-   this.service.GetStaffs().subscribe((response) =>{
-      this.staffs=response as any;
+    await this.service.DeleteStaff(staffID).subscribe((response) =>{
+     this.staffs.splice(this.staffs.findIndex(eachStaff => eachStaff.staffID==staffID)  ,1);
+    })
    });
 }
 SortByName(){

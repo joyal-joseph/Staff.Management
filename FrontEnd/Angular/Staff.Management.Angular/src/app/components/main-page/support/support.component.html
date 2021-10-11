@@ -1,4 +1,6 @@
-<p>support works!</p>
+<h3 style="text-align: center;">List of Support Staffs</h3>
+
+<button id="deleteMultiple" (click)="DeleteStaffs()">Delete</button>
 
 <table class="staffs">
     <th id="CheckBoxColumn"> <input type="checkbox" (click)="selectAllCheckBox()">
@@ -11,9 +13,10 @@
     <th>Gender</th>
     <th>Lab</th>
     <th></th>
+    <th></th>
     <tbody>
         <tr *ngFor="let staff of staffs.slice(paginationStartIndex,paginationEndIndex)">
-            <td><input id="checkBoxRow" class="checkBoxRow" type="checkbox" value={{staff.staffID}}>
+            <td><input id="checkBoxRow" class="checkBoxRow" type="checkbox" [checked]="allChecked" value={{staff.staffID}} (click)="selectACheckBox(staff.staffID)">
             </td>
             <td>{{staff.staffID}}</td>
             <td>{{staff.name}}</td>
@@ -25,7 +28,14 @@
             <td align='center'>
                 <button (click)="DeleteAStaff(staff.staffID)" class="deleteAStaff">Delete</button>
             </td>
+            <td align='center'>
+                <button (click)="UpdateStaff(staff.staffID)" class="updateStaff">Update</button>
+            </td>
         </tr>
     </tbody>
 </table>
 <app-pagination (startAndEndIndeces)="StaffPrinting($event) " title="Pagination for support " [numberOfStaffs]=staffs.length></app-pagination>
+
+<ng-container *ngIf=activePopUpForm>
+    <app-update-form [staffID]=updatingStaffID [staffsList]=staffs (activePopUpForm)="ActivePopUpFormChange($event)" (staffs)="DataAfterUpdate($event)"></app-update-form>
+</ng-container>

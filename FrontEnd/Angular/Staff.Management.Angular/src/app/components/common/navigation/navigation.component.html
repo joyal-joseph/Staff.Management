@@ -6,5 +6,7 @@
     <button id="AddButton" (click)="AddStaff()">Add Staff</button>
 </div>
 <ng-container *ngIf=isAddForm>
-    <app-update-form [staff]=null [isAddForm]=true (activePopUpForm)="ActivePopUpFormChange($event)" (staffs)="DataAfterAdd($event)"></app-update-form>
+    <app-update-form [staffID]=null [isAddForm]=true (activePopUpForm)="ActivePopUpFormChange($event)" (staffs)="DataAfterAdd($event)"></app-update-form>
 </ng-container>
+
+<!-- <app-confirmation-box></app-confirmation-box> -->

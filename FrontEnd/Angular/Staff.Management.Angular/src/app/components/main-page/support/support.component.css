@@ -24,6 +24,11 @@
     background-color: #ddd;
 }
 
+#Sortable:hover {
+    background-color: #ddd;
+    cursor: pointer;
+}
+
 .staffs th {
     padding-top: 12px;
     padding-bottom: 12px;
@@ -35,4 +40,23 @@
 .deleteAStaff {
     background-color: rgb(207, 13, 13);
     color: rgb(255, 255, 255);
+}
+
+.updateStaff {
+    background-color: rgb(47, 129, 206);
+    color: rgb(255, 255, 255);
+}
+
+#deleteMultiple {
+    float: right;
+    color: white;
+    background-color: red;
+    margin-top: 6px;
+    margin-right: 8px;
+    margin-bottom: 6px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: medium;
 }

@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UpdateFormComponent } from './update-form/update-form.component';
+import { ConfirmationBoxComponent } from './confirmation-box/confirmation-box.component';
 
 
 
@@ -12,7 +13,8 @@ import { UpdateFormComponent } from './update-form/update-form.component';
   declarations: [
     UpdateFormComponent,
     NavigationComponent,
-    PaginationComponent
+    PaginationComponent,
+    ConfirmationBoxComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +25,8 @@ import { UpdateFormComponent } from './update-form/update-form.component';
   exports:[
     UpdateFormComponent,
     NavigationComponent,
-    PaginationComponent
+    PaginationComponent,
+    ConfirmationBoxComponent
   ]
 })
 export class CommonComponentModule { }
