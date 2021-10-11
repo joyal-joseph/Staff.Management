@@ -13,29 +13,30 @@ export class SupportComponent implements OnInit {
   activePopUpForm=false;
   isAddForm=false;
   title="List of Support Staffs";
+  activePage:number=1;
   paginationStartIndex:number=0;
   paginationEndIndex: number=9; 
   staffs:any[]=[];
   deleteList: number[]=[];
-  debugElement:string="XYZ";
   RouterModule: any;
   updatingStaffID: any ;
   constructor(private service: StaffService) { 
-    service.GetStaffs().subscribe((response)=>{
     
-    (response as any[]).forEach(element => {
-      if(element.jobType=="Support"){
-        this.staffs.push(element);
-      }
-    });
-  });
   }
 
   ngOnInit(): void {
+    this.service.GetStaffs().subscribe((response)=>{
+      (response as any[]).forEach(element => {
+        if(element.jobType=="Support"){
+          this.staffs.push(element);
+        }
+      });
+    });
   }
   StaffPrinting(event : any){
     this.paginationStartIndex=event.startIndex;
     this.paginationEndIndex=event.endIndex;
+    this.activePage=event.activePage;
   }
   DeleteAStaff(StaffID: number){
     this.service.DeleteStaff(StaffID).subscribe(()=>{
@@ -46,7 +47,6 @@ export class SupportComponent implements OnInit {
   }
   
   selectAllCheckBox(){
-
     if(!this.allChecked){
       this.deleteList=[];
       this.service.GetStaffs().subscribe((response : any)=>{
@@ -60,8 +60,7 @@ export class SupportComponent implements OnInit {
     else{
       this.deleteList=[];
       this.allChecked=!this.allChecked;
-    }
-  
+    } 
 }
 selectACheckBox(staffID:number){
 
@@ -72,7 +71,6 @@ selectACheckBox(staffID:number){
     
   }
   this.deleteList=[...this.deleteList]
-  //this.staffs
 }
 
 newStaffs(staffs:any){
@@ -81,36 +79,24 @@ newStaffs(staffs:any){
 }
 
 UpdateStaff(staffID: number){
-  // this.service.UpdateStaff(staff).subscribe(()=>{
-  //   this.service.GetStaffs().subscribe((response)=>{
-  //     this.staffs=response as any;
-  //   })
-  // })
   this.updatingStaffID=staffID;
   this.activePopUpForm=true;
   this.isAddForm=false;
 }
 
 AddStaff(){
-  // this.service.AddStaff(staff).subscribe(()=>{
-  //   this.service.GetStaffs().subscribe((response)=>{
-  //     this.staffs=response as any;
-  //   })
-  // })
   this.activePopUpForm=true;
   this.isAddForm=true;
-  
+  this.updatingStaffID=-1;
 }
 ActivePopUpFormChange(event: any){
   this.activePopUpForm=event
 }
 DataAfterUpdate(event: any){
   this.staffs=event;
-  console.log(event);
 }
 
 DeleteStaffs(){
-    
   this.deleteList.forEach(async (staffID: number) => {
     await this.service.DeleteStaff(staffID).subscribe((response) =>{
      this.staffs.splice(this.staffs.findIndex(eachStaff => eachStaff.staffID==staffID)  ,1);

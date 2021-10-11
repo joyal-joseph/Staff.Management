@@ -1,4 +1,3 @@
-import { PaginationComponent } from '../../common/pagination/pagination.component';
 import { Component, OnInit } from '@angular/core';
 import { Gender, StaffService } from '../../../services/all-staffs.service';
 
@@ -14,41 +13,38 @@ export class TeacherComponent implements OnInit {
   activePopUpForm=false;
   isAddForm=false;
   title="List of all staffs";
+  activePage:number=1;
   paginationStartIndex:number=0;
   paginationEndIndex: number=9; 
   staffs:any[]=[];
   deleteList: number[]=[];
-  debugElement:string="XYZ";
   RouterModule: any;
   updatingStaffID: any;
   constructor(private service: StaffService) { 
-    service.GetStaffs().subscribe((response)=>{
     
-    (response as any[]).forEach(element => {
-      if(element.jobType=="Teacher"){
-        this.staffs.push(element);
-      }
-    });
-  });
   }
 
   ngOnInit(): void {
+    this.service.GetStaffs().subscribe((response)=>{
+      (response as any[]).forEach(element => {
+        if(element.jobType=="Teacher"){
+          this.staffs.push(element);
+        }
+      });
+    });
   }
   StaffPrinting(event : any){
     this.paginationStartIndex=event.startIndex;
     this.paginationEndIndex=event.endIndex;
+    this.activePage=event.activePage;
   }
   DeleteAStaff(StaffID: number){
     this.service.DeleteStaff(StaffID).subscribe(()=>{
       this.staffs.splice(this.staffs.findIndex(eachStaff => eachStaff.staffID==StaffID)  ,1);
-    }); 
-      
-    
+    });     
   }
   
-
   selectAllCheckBox(){
-
     if(!this.allChecked){
       this.deleteList=[];
       this.service.GetStaffs().subscribe((response : any)=>{
@@ -66,7 +62,6 @@ export class TeacherComponent implements OnInit {
   
 }
 selectACheckBox(staffID:number){
-
   if (this.deleteList.indexOf(staffID) != -1) {
       this.deleteList.splice(this.deleteList.indexOf(staffID),1);
   } else {
@@ -74,7 +69,6 @@ selectACheckBox(staffID:number){
     
   }
   this.deleteList=[...this.deleteList]
-  //this.staffs
 }
 
 newStaffs(staffs:any){
@@ -83,25 +77,15 @@ newStaffs(staffs:any){
 }
 
 UpdateStaff(staffID: object){
-  // this.service.UpdateStaff(staff).subscribe(()=>{
-  //   this.service.GetStaffs().subscribe((response)=>{
-  //     this.staffs=response as any;
-  //   })
-  // })
   this.updatingStaffID=staffID;
   this.activePopUpForm=true;
   this.isAddForm=false;
 }
 
 AddStaff(){
-  // this.service.AddStaff(staff).subscribe(()=>{
-  //   this.service.GetStaffs().subscribe((response)=>{
-  //     this.staffs=response as any;
-  //   })
-  // })
   this.activePopUpForm=true;
   this.isAddForm=true;
-  
+  this.updatingStaffID=-1;
 }
 ActivePopUpFormChange(event: any){
   this.activePopUpForm=event

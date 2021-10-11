@@ -10,11 +10,13 @@ export class PaginationComponent implements OnInit {
   @Input() title=""; 
   @Input() staffs!:any[];
   @Input() numberOfStaffs=0;
+  @Input() activePage:number=1;
 
   @Output() startAndEndIndeces= new EventEmitter();
   
   noOfPages: number= 1;
   pages: number[]=[];
+  
   
   
   
@@ -31,6 +33,7 @@ export class PaginationComponent implements OnInit {
   ChangePage(currentPageNumber: number) {
     let startIndex= (currentPageNumber-1)*10;
     let endIndex= (currentPageNumber)*10-1;
-    this.startAndEndIndeces.emit({startIndex,endIndex})
+    this.activePage=currentPageNumber;
+    this.startAndEndIndeces.emit({startIndex,endIndex,  activePage:this.activePage})
   }
 }

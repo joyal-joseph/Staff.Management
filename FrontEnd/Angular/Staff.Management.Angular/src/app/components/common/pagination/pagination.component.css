@@ -3,17 +3,26 @@ ul {
     list-style: none;
 }
 
+li.active {
+    color: brown;
+}
+
 li {
     padding-left: 20px;
     border: 2px solid rgb(0, 183, 255);
     padding-right: 20px;
     padding-top: 6px;
-    background-image: linear-gradient(rgb(7, 141, 252), rgb(0, 217, 255));
-    color: rgb(255, 255, 255);
+    background-color: white;
+    color: black;
     font-size: medium;
 }
 
 #Pagination {
     margin-left: 30vw;
     margin-top: 30px;
+}
+
+.ActivePage {
+    color: white;
+    background-image: linear-gradient(rgb(7, 141, 252), rgb(0, 217, 255));
 }

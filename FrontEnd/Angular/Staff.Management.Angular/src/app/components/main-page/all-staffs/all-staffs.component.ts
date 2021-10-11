@@ -17,42 +17,39 @@ import { StaffService, Gender } from '../../../services/all-staffs.service';
 
 export class AllStaffsComponent implements OnInit {
 
-  
-
   staffs:any[]=[];
   //const myObservable = of(this.staffs);
   allChecked=false;
   activePopUpForm=false;
   isAddForm=false;
   title="List of all staffs";
+
+  activePage:number=1;
+
   paginationStartIndex:number=0;
   paginationEndIndex: number=9; 
   
   deleteList: number[]=[];
-  debugElement:string="XYZ";
   RouterModule: any;
   updatingStaffID: any;
   constructor(private service: StaffService ) { 
    
   }
-  
-
   ngOnInit(): void {
     this.service.GetStaffs().subscribe((response)=>{
       this.staffs=response as any;  
     });
-
   }
   StaffPrinting(event : any){
     this.paginationStartIndex=event.startIndex;
     this.paginationEndIndex=event.endIndex;
+    this.activePage=event.activePage;
   }
   DeleteAStaff(StaffID: number){
     
     this.service.DeleteStaff(StaffID).subscribe(()=>{
       this.staffs.splice(this.staffs.findIndex(eachStaff => eachStaff.staffID==StaffID)  ,1)
-    }); 
-      
+    });      
   }
 
 selectAllCheckBox(){
@@ -91,41 +88,31 @@ newStaffs(staffs:any){
 }
 
 UpdateStaff(staffID: number){
-  // this.service.UpdateStaff(staff).subscribe(()=>{
-  //   this.service.GetStaffs().subscribe((response)=>{
-  //     this.staffs=response as any;
-  //   })
-  // });
   this.updatingStaffID=staffID;
   this.activePopUpForm=true;
   this.isAddForm=false;
 }
 
+
 AddStaff(){
-  // this.service.AddStaff(staff).subscribe(()=>{
-  //   this.service.GetStaffs().subscribe((response)=>{
-  //     this.staffs=response as any;
-  //   })
-  // })
   this.activePopUpForm=true;
   this.isAddForm=true;
+  this.updatingStaffID=-1;
   
 }
+
 ActivePopUpFormChange(event: any){
   this.activePopUpForm=event
 }
 DataAfterUpdate(event: any){
   this.staffs=event;
 }
-
 DeleteStaffs(){
-    
   this.deleteList.forEach(async (staffID: number) => {
    await this.service.DeleteStaff(staffID).subscribe((response) =>{
     this.staffs.splice(this.staffs.findIndex(eachStaff => eachStaff.staffID==staffID)  ,1);
    })
   });
-
 }
 
 SortByName(){

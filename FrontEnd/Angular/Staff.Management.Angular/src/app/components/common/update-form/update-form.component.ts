@@ -25,51 +25,36 @@ export class UpdateFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.service.GetAStaff(this.staffID).subscribe((response)=>{
-      this.staff=response;      
-    });
+    if (this.staffID>0) {
+      this.service.GetAStaff(this.staffID).subscribe((response)=>{
+        this._staff=response as any;      
+      });
+    }
+    else{
+      this.staff=this._staff; 
+    }
+    
    
   }
   ngOnChanges(){
     
   }
   UpdateStaff(){
-    // this.service.UpdateStaff(this.staff).subscribe((response)=>
-    //   this.service.GetStaffs().subscribe((response: any)=>{
-    //     this.staffs.emit(response) }));
-
-    // this.service.UpdateStaff(this.staff).subscribe((response)=>{
-    //   this.staffsList.find((i: any)=>{
-    //   if(this.staff.staffID=== i.staffID){
-    //     console.log(this.staff, i);
-    //   }
-    // });
-    // });
-    // this.service.GetAStaff(this.staffID).subscribe((response)=>{
-    //   this.staff=response;
-    //   console.log(this.staff,response);
-    // }
-    // )
     
-    console.log(this.staffsList, this.staff.staffID);
-    this.service.UpdateStaff(this.staff).subscribe((response)=>{
+    // console.log(this.staffsList, this._staff.staffID);
+    this.service.UpdateStaff(this._staff).subscribe((response)=>{
 
       for (let index = 0; index < this.staffsList.length; index++) {
-        if(this.staffsList[index].staffID==this.staff.staffID){
-          this.staffsList[index]=this.staff;
+        if(this.staffsList[index].staffID==this._staff.staffID){
+          this.staffsList[index]=this._staff;
           break;
         }
         
       }
       this.staffs.emit(this.staffsList);
-      this.activePopUpForm.emit(false);
-      this.staff=null;
+      this.popUpClose();
       
-    })
-
-    
-    
-      
+    }) 
   }
   AddStaff(){
     //switching by job type
@@ -94,14 +79,15 @@ export class UpdateFormComponent implements OnInit {
         break;
     }
     console.log(this._staff,__staff);
-     this.service.AddStaff(__staff).subscribe((response)=>
+     this.service.AddStaff(__staff).subscribe((res)=>
         this.service.GetStaffs().subscribe((response: any)=>{
          this.staffs.emit(response);
+         debugger;
         this._staff={staffID:-1, name:"", gender:1,age:18, dailyWage:0, jobType:"",classTeacher:"",subject:"",section:"",lab:""};
         }));
-      
-    this.activePopUpForm.emit(false);
-    this.staff=null;
+     
+    // this.staffsList.push(__staff);
+    this.popUpClose();
   }
   popUpClose(){
     this.activePopUpForm.emit(false);

@@ -12,25 +12,26 @@ export class AdminComponent implements OnInit {
   activePopUpForm=false;
   isAddForm=false;
   title="List of Admins";
+  activePage:number=1;
   paginationStartIndex:number=0;
   paginationEndIndex: number=9; 
   staffs:any[]=[];
   deleteList: number[]=[];
-  debugElement:string="XYZ";
   RouterModule: any;
   updatingStaffID: any;
   constructor(private service: StaffService) { 
-    service.GetStaffs().subscribe((response)=>{
     
-    (response as any[]).forEach(element => {
-      if(element.jobType=="Admin"){
-        this.staffs.push(element);
-      }
-    });
-  });
   }
 
   ngOnInit(): void {
+    this.service.GetStaffs().subscribe((response)=>{
+    
+      (response as any[]).forEach(element => {
+        if(element.jobType=="Admin"){
+          this.staffs.push(element);
+        }
+      });
+    });
   }
   StaffPrinting(event : any){
     this.paginationStartIndex=event.startIndex;
@@ -79,25 +80,15 @@ newStaffs(staffs:any){
 }
 
 UpdateStaff(staffID: number){
-  // this.service.UpdateStaff(staff).subscribe(()=>{
-  //   this.service.GetStaffs().subscribe((response)=>{
-  //     this.staffs=response as any;
-  //   })
-  // })
   this.updatingStaffID=staffID;
   this.activePopUpForm=true;
   this.isAddForm=false;
 }
 
 AddStaff(){
-  // this.service.AddStaff(staff).subscribe(()=>{
-  //   this.service.GetStaffs().subscribe((response)=>{
-  //     this.staffs=response as any;
-  //   })
-  // })
   this.activePopUpForm=true;
   this.isAddForm=true;
-  
+  this.updatingStaffID=-1;
 }
 ActivePopUpFormChange(event: any){
   this.activePopUpForm=event

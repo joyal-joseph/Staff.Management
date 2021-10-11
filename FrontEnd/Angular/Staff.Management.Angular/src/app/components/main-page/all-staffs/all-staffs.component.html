@@ -1,7 +1,7 @@
 <h3 style="text-align: center;">List of All Staffs</h3>
+<button id="AddButton" (click)="AddStaff()">Add Staff</button>
 <!-- <button id="AddButton" (click)="AddStaff()">Add Staff</button> -->
 <button id="deleteMultiple" (click)="DeleteStaffs()">Delete</button>
-
 
 <div>
     <table class="staffs">
@@ -46,7 +46,10 @@
 </div>
 
 
-<app-pagination (startAndEndIndeces)="StaffPrinting($event) " title="Pagination for All staffs " [numberOfStaffs]=staffs.length></app-pagination>
+<app-pagination (startAndEndIndeces)="StaffPrinting($event)" [activePage]=activePage title="Pagination for All staffs " [numberOfStaffs]=staffs.length></app-pagination>
 <ng-container *ngIf=activePopUpForm>
     <app-update-form [staffID]=updatingStaffID [staffsList]=staffs (activePopUpForm)="ActivePopUpFormChange($event)" (staffs)="DataAfterUpdate($event)"></app-update-form>
 </ng-container>
+<!-- <ng-container *ngIf=isAddForm>
+    <app-update-form [staffID]=-1 [isAddForm]=true (activePopUpForm)="ActivePopUpFormChange($event)" (staffs)="DataAfterUpdate($event)"></app-update-form>
+</ng-container> -->
