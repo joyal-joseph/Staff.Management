@@ -1,23 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace staff_management_2
+
+namespace StaffManagementConsole
 {
-    
+
     public class Support : Staff
     {
-        //public int DailyWage { get => DailyWage; set => DailyWage = 600; }
         public string Lab { get; set; }
-        
-
-        public override void AddStaff(int ID)
+        public override void AddOrUpdateStaff(int ID)
         {
-            base.AddStaff(ID);
+            base.AddOrUpdateStaff(ID);
             this.Lab = Input("Lab department");
             this.DailyWage = 600;
+            this.JobType = "Support";
         }
         public override void ViewStaff()
         {

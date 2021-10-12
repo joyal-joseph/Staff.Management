@@ -1,0 +1,5 @@
+<div id="Pagination">
+    <ul>
+        <li (click)="ChangePage(number)" [ngClass]="{'ActivePage': number==activePage}" *ngFor="let number of pages">{{number}} </li>
+    </ul>
+</div>

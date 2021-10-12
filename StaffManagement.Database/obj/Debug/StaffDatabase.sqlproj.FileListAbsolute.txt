@@ -1,0 +1,6 @@
+C:\Work\JoyalTraining\Staff.Management\StaffManagement.Database\bin\Debug\StaffDatabase.dacpac
+C:\Work\JoyalTraining\Staff.Management\StaffManagement.Database\bin\Debug\StaffManagement.Database.dll
+C:\Work\JoyalTraining\Staff.Management\StaffManagement.Database\bin\Debug\StaffManagement.Database.pdb
+C:\Work\JoyalTraining\Staff.Management\StaffManagement.Database\obj\Debug\StaffDatabase.sqlproj.AssemblyReference.cache
+C:\Work\JoyalTraining\Staff.Management\StaffManagement.Database\obj\Debug\StaffManagement.Database.dll
+C:\Work\JoyalTraining\Staff.Management\StaffManagement.Database\obj\Debug\StaffManagement.Database.pdb

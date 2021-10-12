@@ -9,6 +9,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Joyal.StaffManagement.Core"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLibrary", "DataLibrary\DataLibrary.csproj", "{240D0D82-3AF2-442C-93D6-A4A4BB7F63D5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{34C51FF3-D562-45AF-8B97-FAA975A91827}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "StaffDatabase", "StaffManagement.Database\StaffDatabase.sqlproj", "{FD17B760-52E1-40DD-8A9E-2DE478A53F76}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StaffDatabaseHelper", "StaffDatabaseHelper\StaffDatabaseHelper.csproj", "{201CFB0E-B9CF-4455-AB3D-0D476F26F1D5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StaffManagementAPI", "StaffManagementAPI\StaffManagementAPI.csproj", "{C32CEEF5-30F7-4790-B864-E67D337C9A95}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +35,20 @@ Global
 		{240D0D82-3AF2-442C-93D6-A4A4BB7F63D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{240D0D82-3AF2-442C-93D6-A4A4BB7F63D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{240D0D82-3AF2-442C-93D6-A4A4BB7F63D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD17B760-52E1-40DD-8A9E-2DE478A53F76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD17B760-52E1-40DD-8A9E-2DE478A53F76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD17B760-52E1-40DD-8A9E-2DE478A53F76}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{FD17B760-52E1-40DD-8A9E-2DE478A53F76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD17B760-52E1-40DD-8A9E-2DE478A53F76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD17B760-52E1-40DD-8A9E-2DE478A53F76}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{201CFB0E-B9CF-4455-AB3D-0D476F26F1D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{201CFB0E-B9CF-4455-AB3D-0D476F26F1D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{201CFB0E-B9CF-4455-AB3D-0D476F26F1D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{201CFB0E-B9CF-4455-AB3D-0D476F26F1D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C32CEEF5-30F7-4790-B864-E67D337C9A95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C32CEEF5-30F7-4790-B864-E67D337C9A95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C32CEEF5-30F7-4790-B864-E67D337C9A95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C32CEEF5-30F7-4790-B864-E67D337C9A95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

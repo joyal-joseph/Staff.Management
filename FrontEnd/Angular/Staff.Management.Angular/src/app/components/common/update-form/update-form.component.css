@@ -1,0 +1,70 @@
+.popUpForm {
+    background-image: linear-gradient(to right, rgb(0, 255, 191), rgb(125, 225, 238));
+    position: absolute;
+    top: 123px;
+    margin-left: 35vw;
+    width: 30vw;
+    height: 50vh;
+    border-radius: 10px;
+    color: rgb(0, 0, 0);
+    font-size: 18px;
+}
+
+#UpdateHeading {
+    text-align: center;
+}
+
+label {
+    float: left;
+    width: 6em;
+    text-align: right;
+    padding-right: 0.5em;
+}
+
+#Dataform input,
+textarea {
+    text-align: left;
+    width: 180px;
+}
+
+select {
+    width: 188px;
+}
+
+input.button {
+    margin-left: 6.5em;
+    width: auto;
+}
+
+#formButton {
+    margin-left: 130px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: small;
+    color: rgb(255, 255, 255);
+    background-color: rgb(235, 30, 30);
+}
+
+label,
+input.submit {
+    font: normal 0.8em Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+
+#DataForm {
+    margin-left: 65px;
+}
+
+.close {
+    color: brown;
+    float: right;
+    margin-right: 20px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+form {
+    display: inline-block;
+    margin-left: 4vw;
+}

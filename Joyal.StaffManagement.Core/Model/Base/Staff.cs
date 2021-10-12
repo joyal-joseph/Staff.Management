@@ -1,13 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using static StaffManagementConsole.Staff;
+using System.Xml.Serialization;
+using System.Runtime.Serialization;
 
-namespace staff_management_2
-{    
-    public abstract class Staff
+namespace StaffManagementConsole
+{
+    [XmlInclude(typeof(Teaching))]
+    [XmlInclude(typeof(Administrative))]
+    [XmlInclude(typeof(Support))]
+    [KnownType(typeof(Teaching))]
+    [KnownType(typeof(Administrative))]
+    [KnownType(typeof(Support))]
+
+    public abstract class Staff : IStaffOperation
     {
+        public string JobType { get; set; }
         public int StaffID { get; set; }
         public string Name { get; set; }
         public int Age { get; set; }
@@ -15,9 +22,9 @@ namespace staff_management_2
         public int DailyWage { get; set; }
         public enum GenderType
         {
-            Male,
-            Female,
-            Other
+            M,
+            F,
+            O
         }
         public int AgeInput()
         {
@@ -42,66 +49,57 @@ namespace staff_management_2
                 catch
                 {
                     Console.WriteLine("The age should be an integer. You entered wrong type.");
-                    flag = true;
                 }
-                flag = true;
             }
             return 0;
         }
         public string Input(string x)
         {
             bool flag = true;
-            string name;
+            string name = null;
             while (flag)
             {
                 Console.WriteLine(string.Format("Enter {0}",x));
                 name =Console.ReadLine();
                 if (name == "")
                 {
-                    flag = true;
                     Console.WriteLine(string.Format("The {0} cannot be empty.",x));
                 }
                 else
                 {
-                    return name;
+                    flag = false;
                 }
             }
-            return (null);
+            return name;
         }
         public GenderType GenderInput()
         {
-            bool flag = true;
             string gender;
-            while (flag)
+            GenderType Gender= new();
+            while (true)
             {
                 Console.WriteLine("Enter gender: [M/F/O]");
                 gender = Console.ReadLine();
-                if(gender == "")
+                try
                 {
-                    flag = true;
-                    Console.WriteLine("Gender cannot be empty");
+                    Int16.Parse(gender);
+                    Console.WriteLine("Integers not allowed.");
                 }
-                else if(gender=="M" || gender =="F" || gender=="O")
+                catch (Exception)
                 {
-                    switch (gender)
+                    if (Enum.TryParse<GenderType>(gender, out Gender))
                     {
-                        case "M":
-                            return GenderType.Male;
-                        case "F":
-                            return GenderType.Female;
-                        case "O":
-                            return GenderType.Other;
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Enter correct gender type.");
                     }
                 }
-                else
-                {
-                    Console.WriteLine("Enter correct gender type.");
-                    flag = true;
-                }
             }
-            return GenderType.Other;
+            return Gender;
         }
-        public virtual void AddStaff(int ID)
+        public virtual void AddOrUpdateStaff(int ID)
         {
             this.Name = Input("name");
             this.Age = AgeInput();
@@ -110,7 +108,7 @@ namespace staff_management_2
         }
         public  virtual void ViewStaff()
         {
-            Console.WriteLine(String.Format("ID:{3}\nName: {0}\nAge: {1}\nGender: {2}", this.Name, this.Age, this.Gender,this.StaffID));            
+            Console.WriteLine(String.Format("ID:{3}\nName: {0}\nAge: {1}\nGender: {2}", this.Name, this.Age, this.Gender,this.StaffID));
         }
         public virtual void UpdateStaff(int choice) 
         {
@@ -125,11 +123,9 @@ namespace staff_management_2
                 case 3:
                     this.Gender = GenderInput();
                     break;
-                default:
-                    //no default value required here
-                    break;
             }
         }
         public abstract void Salary();       
     }
+    
 }

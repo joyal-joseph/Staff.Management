@@ -6,8 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.13.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.10" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DataLibrary\DataLibrary.csproj" />
     <ProjectReference Include="..\Joyal.StaffManagement.Core\Joyal.StaffManagement.Core.csproj" />
+    <ProjectReference Include="..\StaffDatabaseHelper\StaffDatabaseHelper.csproj" />
   </ItemGroup>
 
 </Project>

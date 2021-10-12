@@ -1,0 +1,15 @@
+C:\Work\JoyalTraining\Staff.Management\StaffDatabaseHelper\bin\Debug\net5.0\StaffDatabaseHelper.deps.json
+C:\Work\JoyalTraining\Staff.Management\StaffDatabaseHelper\bin\Debug\net5.0\StaffDatabaseHelper.dll
+C:\Work\JoyalTraining\Staff.Management\StaffDatabaseHelper\bin\Debug\net5.0\ref\StaffDatabaseHelper.dll
+C:\Work\JoyalTraining\Staff.Management\StaffDatabaseHelper\bin\Debug\net5.0\StaffDatabaseHelper.pdb
+C:\Work\JoyalTraining\Staff.Management\StaffDatabaseHelper\bin\Debug\net5.0\Joyal.StaffManagement.Core.dll
+C:\Work\JoyalTraining\Staff.Management\StaffDatabaseHelper\bin\Debug\net5.0\Joyal.StaffManagement.Core.pdb
+C:\Work\JoyalTraining\Staff.Management\StaffDatabaseHelper\obj\Debug\net5.0\StaffDatabaseHelper.csproj.AssemblyReference.cache
+C:\Work\JoyalTraining\Staff.Management\StaffDatabaseHelper\obj\Debug\net5.0\StaffDatabaseHelper.GeneratedMSBuildEditorConfig.editorconfig
+C:\Work\JoyalTraining\Staff.Management\StaffDatabaseHelper\obj\Debug\net5.0\StaffDatabaseHelper.AssemblyInfoInputs.cache
+C:\Work\JoyalTraining\Staff.Management\StaffDatabaseHelper\obj\Debug\net5.0\StaffDatabaseHelper.AssemblyInfo.cs
+C:\Work\JoyalTraining\Staff.Management\StaffDatabaseHelper\obj\Debug\net5.0\StaffDatabaseHelper.csproj.CoreCompileInputs.cache
+C:\Work\JoyalTraining\Staff.Management\StaffDatabaseHelper\obj\Debug\net5.0\StaffDatabaseHelper.csproj.CopyComplete
+C:\Work\JoyalTraining\Staff.Management\StaffDatabaseHelper\obj\Debug\net5.0\StaffDatabaseHelper.dll
+C:\Work\JoyalTraining\Staff.Management\StaffDatabaseHelper\obj\Debug\net5.0\ref\StaffDatabaseHelper.dll
+C:\Work\JoyalTraining\Staff.Management\StaffDatabaseHelper\obj\Debug\net5.0\StaffDatabaseHelper.pdb

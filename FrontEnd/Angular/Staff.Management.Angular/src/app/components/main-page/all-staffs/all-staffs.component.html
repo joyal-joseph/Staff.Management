@@ -1,0 +1,55 @@
+<h3 style="text-align: center;">List of All Staffs</h3>
+<button id="AddButton" (click)="AddStaff()">Add Staff</button>
+<!-- <button id="AddButton" (click)="AddStaff()">Add Staff</button> -->
+<button id="deleteMultiple" (click)="DeleteStaffs()">Delete</button>
+
+<div>
+    <table class="staffs">
+        <th id="CheckBoxColumn"> <input type="checkbox" [checked]="allChecked" (click)="selectAllCheckBox()">
+        </th>
+        <th id="Sortable" (click)="SortByID()">StaffID</th>
+        <th id="Sortable" (click)="SortByName()">Name</th>
+        <th>Age</th>
+        <th>Salary</th>
+        <th>JobType</th>
+        <th>Gender</th>
+        <th>Subject</th>
+        <th>Class Duty</th>
+        <th>Department</th>
+        <th>Section</th>
+        <th></th>
+        <th></th>
+        <tbody>
+            <tr *ngFor="let staff of staffs.slice(paginationStartIndex,paginationEndIndex)">
+                <td>
+                    <input id="checkBoxRow" class="checkBoxRow" type="checkbox" [checked]="allChecked" value={{staff.staffID}} (click)="selectACheckBox(staff.staffID)">
+                </td>
+                <td>{{staff.staffID}}</td>
+                <td>{{staff.name}}</td>
+                <td>{{staff.age}}</td>
+                <td>{{staff.dailyWage}}</td>
+                <td>{{staff.jobType}}</td>
+                <td>{{GenderFunction(staff.gender)}}</td>
+                <td>{{staff.subject?staff.subject:" NA "}}</td>
+                <td>{{staff.classTeacher?staff.classTeacher:"NA "}}</td>
+                <td>{{staff.lab?staff.lab:"NA "}}</td>
+                <td>{{staff.section?staff.section:"NA "}}</td>
+                <td align='center'>
+                    <button (click)="DeleteAStaff(staff.staffID)" class="deleteAStaff">Delete</button>
+                </td>
+                <td align='center'>
+                    <button (click)="UpdateStaff(staff.staffID)" class="updateStaff">Update</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<app-pagination (startAndEndIndeces)="StaffPrinting($event)" [activePage]=activePage title="Pagination for All staffs " [numberOfStaffs]=staffs.length></app-pagination>
+<ng-container *ngIf=activePopUpForm>
+    <app-update-form [staffID]=updatingStaffID [staffsList]=staffs (activePopUpForm)="ActivePopUpFormChange($event)" (staffs)="DataAfterUpdate($event)"></app-update-form>
+</ng-container>
+<!-- <ng-container *ngIf=isAddForm>
+    <app-update-form [staffID]=-1 [isAddForm]=true (activePopUpForm)="ActivePopUpFormChange($event)" (staffs)="DataAfterUpdate($event)"></app-update-form>
+</ng-container> -->

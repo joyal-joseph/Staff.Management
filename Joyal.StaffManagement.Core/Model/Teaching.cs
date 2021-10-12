@@ -1,28 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace staff_management_2
+
+namespace StaffManagementConsole
 {
     public class Teaching: Staff
     {
-        //private int dailyWage;
-        //public int DailyWage { get=>dailyWage; set=>dailyWage=1000; }
+        public string ClassTeacher { get; set; }
         public string Subject { get; set; }
-        public override void AddStaff(int ID)
+        public override void AddOrUpdateStaff(int ID)
         { 
-            base.AddStaff(ID);
+            base.AddOrUpdateStaff(ID);
             this.Subject = Input("subject");
+            Console.WriteLine("class of duty as Class Teacher(if not hit enter )");
+            //this.ClassTeacher = Input("class of duty as Class Teacher(if not  enter NA)");
+            this.ClassTeacher = Console.ReadLine();
             this.DailyWage = 1000;
+            this.JobType = "Teacher";
 
         }
         
         public override void ViewStaff()
         {
             base.ViewStaff();
-            Console.WriteLine(string.Format("Subject: {0}\nDailywage: {1}", this.Subject, this.DailyWage));
+            Console.WriteLine(string.Format("Subject: {0}\nDailywage: {1}\nClass teacher role: {2}", this.Subject, this.DailyWage,this.ClassTeacher));
             
         }
         

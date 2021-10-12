@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="buttons">
+
+        <button class="topbtn" onclick=add()>Add staff</button>
+        <div class="dropdown">
+            <button onclick="toggle()" class="topbtn" id="filterButton">All staff</button>
+            <div id="dropdown-content" class="dropdown-content">
+                <button onclick="filterByType('All staff')">All staff</button>
+                <button onclick="filterByType('Teacher')">Teacher</button>
+                <button onclick="filterByType('Admin')">Admin</button>
+                <button onclick="filterByType('Support')">Support</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="popUpForm" id="popUpForm">
+        <span class="close" onclick="popUpClose()">&times;</span>
+        <h2 id="AddOrUpdateHeading">Add</h2>
+
+        <form id="Dataform">
+            <div id="DataForm" class="modal">
+                <div class="DataFields">
+                    <input type="number" name="staffID" id="StaffID" hidden value=-1>
+
+                    <label for="Name">Name: </label>
+                    <input type="text" id="Name" name="name" value="" required><br>
+                    <label for="Age"> Age:</label>
+                    <input type="number" id="Age" name="age" value="" min="18" max="75" required><br>
+                    <label for="Gender">Gender:</label>
+                    <select id="Gender" name="gender" value="0">
+                        <option value="0">Male</option>
+                        <option value="1">Female</option>
+                        <option value="2">Others</option>
+                </select><br>
+                    <label for="DailyWage">DailyWage:</label>
+                    <input type="number" id="DailyWage" name="dailyWage" value="" required><br>
+                    <label for="JobType">JobType:</label>
+
+                    <select id="JobType" name="jobType" value="None" onchange="jobField()">
+                        <option value="None">Select</option>
+                        <option value="Teacher">Teacher</option>
+                        <option value="Support">Support</option>
+                        <option value="Admin">Admin</option>
+                </select><br>
+                    <div id="JobFieldInput">
+                    </div>
+                    <br>
+                    <button type="submit" id="formButton"> Add/Update</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <h2>Staff Details </h2>
+
+    <table id="StaffTable">
+        <thead>
+            <tr>
+                <th id="CheckBoxColumn"> <input type="checkbox" onclick="selectAllCheckBox()"></input>
+                </th>
+                <th class="TableHeaderUp" id="staffID" onclick="sortFunction('staffID')">StaffID&#9650</th>
+                <th class="TableHeader" id="name" onclick="sortFunction('name')">Name</th>
+                <th class="TableHeader" id="age" onclick="sortFunction('age')">Age</th>
+                <th class="TableHeader" id="gender" onclick="sortFunction('gender')">Gender</th>
+                <th class="TableHeader" id="dailyWage" onclick="sortFunction('dailyWage')">Dailywage</th>
+                <th class="TableHeader" id="jobType" onclick="sortFunction('jobType')">Jobtype</th>
+                <th class="TableHeader" id="subject" onclick="sortFunction('subject')">Subject</th>
+                <th class="TableHeader" id="classTeacher" onclick="sortFunction('classTeacher')">Class Duty</th>
+                <th class="TableHeader" id="section" onclick="sortFunction('section')">Section</th>
+                <th class="TableHeader" id="lab" onclick="sortFunction('lab')">Department</th>
+                <th></th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    <br>
+    <div class="pagination" id="pagination">
+
+    </div>
+
+    <button class="topbtn" onclick=multipleDelete() style="float: left; margin-left: 55px; background-color: rgb(187, 26, 26); ">Delete</button>
+
+</body>
+<script src="Index.js"></script>
+
+</html>
