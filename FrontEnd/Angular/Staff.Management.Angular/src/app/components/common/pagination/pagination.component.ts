@@ -11,6 +11,7 @@ export class PaginationComponent implements OnInit {
   @Input() staffs!:any[];
   @Input() numberOfStaffs=0;
   @Input() activePage:number=1;
+  @Input() allChecked: any;
 
   @Output() startAndEndIndeces= new EventEmitter();
   
@@ -32,8 +33,9 @@ export class PaginationComponent implements OnInit {
   
   ChangePage(currentPageNumber: number) {
     let startIndex= (currentPageNumber-1)*10;
-    let endIndex= (currentPageNumber)*10-1;
+    let endIndex= (currentPageNumber)*10;
     this.activePage=currentPageNumber;
-    this.startAndEndIndeces.emit({startIndex,endIndex,  activePage:this.activePage})
+    this.allChecked=false;
+    this.startAndEndIndeces.emit({startIndex,endIndex,  activePage:this.activePage, allChecked:this.allChecked})
   }
 }

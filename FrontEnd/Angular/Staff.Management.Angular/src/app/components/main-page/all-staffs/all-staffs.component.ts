@@ -1,3 +1,7 @@
+// import { Support } from 'src/app/Models/Support.model';
+// import { Admin } from 'src/app/Models/Admin.model';
+// import { Teacher } from 'src/app/Models/Teacher.model';
+import { BaseComponent } from '../Base/base.class';
 
 import { NgIf } from '@angular/common';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
@@ -5,6 +9,9 @@ import { isDelegatedFactoryMetadata } from '@angular/compiler/src/render3/r3_fac
 import { Component, OnInit, Output,EventEmitter } from '@angular/core';
 import { from, Observable, of } from 'rxjs';
 import { StaffService, Gender } from '../../../services/all-staffs.service';
+import { Teacher } from 'src/app/Models/Teacher.model';
+import { Admin } from 'src/app/Models/Admin.model';
+import { Support } from 'src/app/Models/Support.model';
 
 
 
@@ -15,113 +22,33 @@ import { StaffService, Gender } from '../../../services/all-staffs.service';
 })
 
 
-export class AllStaffsComponent implements OnInit {
-
-  staffs:any[]=[];
-  //const myObservable = of(this.staffs);
-  allChecked=false;
-  activePopUpForm=false;
-  isAddForm=false;
+export class AllStaffsComponent extends BaseComponent implements OnInit {
   title="List of all staffs";
-
-  activePage:number=1;
-
-  paginationStartIndex:number=0;
-  paginationEndIndex: number=9; 
   
-  deleteList: number[]=[];
-  RouterModule: any;
-  updatingStaffID: any;
-  constructor(private service: StaffService ) { 
-   
+  constructor(private _service: StaffService )  {
+    super(_service);
   }
+
   ngOnInit(): void {
     this.service.GetStaffs().subscribe((response)=>{
-      this.staffs=response as any;  
+        (response as any[]).forEach(element => {
+          switch (element.jobType) {
+            case "Teacher":
+              element=element as Teacher;
+              break;
+            case "Admin":
+              element=element as Admin;
+              break;
+            case "Support":
+              element=element as Support;
+              break;
+            default:
+              break;
+          }
+          this.staffs.push(element);
+      });
+      //  
     });
   }
-  StaffPrinting(event : any){
-    this.paginationStartIndex=event.startIndex;
-    this.paginationEndIndex=event.endIndex;
-    this.activePage=event.activePage;
-  }
-  DeleteAStaff(StaffID: number){
-    
-    this.service.DeleteStaff(StaffID).subscribe(()=>{
-      this.staffs.splice(this.staffs.findIndex(eachStaff => eachStaff.staffID==StaffID)  ,1)
-    });      
-  }
 
-selectAllCheckBox(){
-
-    if(!this.allChecked){
-      this.deleteList=[];
-      this.service.GetStaffs().subscribe((response : any)=>{
-        response.forEach((element: { staffID: number; })  => {
-          this.deleteList.push(element.staffID);
-        });
-      }
-      )
-      this.allChecked=!this.allChecked;
-    }
-    else{
-      this.deleteList=[];
-      this.allChecked=!this.allChecked;
-    }
-  
-}
-selectACheckBox(staffID:number){
-
-  if (this.deleteList.indexOf(staffID) != -1) {
-      this.deleteList.splice(this.deleteList.indexOf(staffID),1);
-  } else {
-    this.deleteList.push(staffID) ;
-    
-  }
-  this.deleteList=[...this.deleteList]
-  //this.staffs
-}
-
-newStaffs(staffs:any){
-  this.staffs=staffs;
-  console.log(staffs)
-}
-
-UpdateStaff(staffID: number){
-  this.updatingStaffID=staffID;
-  this.activePopUpForm=true;
-  this.isAddForm=false;
-}
-
-
-AddStaff(){
-  this.activePopUpForm=true;
-  this.isAddForm=true;
-  this.updatingStaffID=-1;
-  
-}
-
-ActivePopUpFormChange(event: any){
-  this.activePopUpForm=event
-}
-DataAfterUpdate(event: any){
-  this.staffs=event;
-}
-DeleteStaffs(){
-  this.deleteList.forEach(async (staffID: number) => {
-   await this.service.DeleteStaff(staffID).subscribe((response) =>{
-    this.staffs.splice(this.staffs.findIndex(eachStaff => eachStaff.staffID==staffID)  ,1);
-   })
-  });
-}
-
-SortByName(){
-  this.staffs.sort((a, b) => (a.name < b.name ? -1 : 1));
-}
-SortByID(){
-  this.staffs.sort((a, b) => (a.staffID < b.staffID ? -1 : 1));
-}
-GenderFunction(gender: number){
-  return Gender[gender];
-}
 }

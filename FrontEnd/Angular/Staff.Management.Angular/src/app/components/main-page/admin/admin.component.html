@@ -3,7 +3,7 @@
 <button id="AddButton" (click)="AddStaff()">Add Staff</button>
 <button id="deleteMultiple" (click)="DeleteStaffs()">Delete</button>
 <table class="staffs">
-    <th id="CheckBoxColumn"> <input type="checkbox" (click)="selectAllCheckBox()">
+    <th id="CheckBoxColumn"> <input type="checkbox" [checked]="allChecked" (click)="selectAllCheckBox()">
     </th>
     <th id="Sortable" (click)="SortByID()">StaffID</th>
     <th id="Sortable" (click)="SortByName()">Name</th>
@@ -30,7 +30,7 @@
                 <button (click)=" DeleteAStaff(staff.staffID) " class="deleteAStaff ">Delete</button>
             </td>
             <td align='center'>
-                <button (click)="UpdateStaff(staff) " class="updateStaff ">Update</button>
+                <button (click)="UpdateStaff(staff.staffID) " class="updateStaff ">Update</button>
             </td>
         </tr>
     </tbody>
